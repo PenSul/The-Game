@@ -334,12 +334,15 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
 
       // Animation
       this.anims.create({
-        key: "Run",
-        frameRate: 9,
-        repeat: -1,
-        frames: this.anims.generateFrameNumbers("_Run", {
-          frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        })
+        key: "KnightRun",
+        frameRate: 20,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_KnightRun_00",
+          suffix: ".png",
+          start: 0,
+          end: 9
+        }),
+        repeat: -1
       });
 
       // Music
@@ -368,7 +371,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       play.setInteractive();
       play.on("pointerover", function () {
         hoverSprites.setVisible(true);
-        hoverSprites.play("Run");
+        hoverSprites.play("KnightRun");
         hoverSprites.x = play.x - play.width;
         hoverSprites.y = play.y - 50;
       });
@@ -382,7 +385,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       option.setInteractive();
       option.on("pointerover", function () {
         hoverSprites.setVisible(true);
-        hoverSprites.play("Run");
+        hoverSprites.play("KnightRun");
         hoverSprites.x = option.x - option.width;
         hoverSprites.y = option.y - 50;
       });
@@ -396,7 +399,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       pk.setInteractive();
       pk.on("pointerover", function () {
         hoverSprites.setVisible(true);
-        hoverSprites.play("Run");
+        hoverSprites.play("KnightRun");
         hoverSprites.x = pk.x - pk.width;
         hoverSprites.y = pk.y - 50;
       });
@@ -484,18 +487,19 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       // Knight Attack
       this.anims.create({
         key: "KnightAttack",
-        duration: 200,
+        frameRate: 6,
         frames: this.anims.generateFrameNames("Characters", {
           prefix: "_KnightAttack_00",
           suffix: ".png",
           start: 0,
           end: 3
-        })
+        }),
+        delay: 200
       });
       // Knight Attack No Movement
       this.anims.create({
         key: "KnightAttackNoMovement",
-        duration: 200,
+        frameRate: 6,
         frames: this.anims.generateFrameNames("Characters", {
           prefix: "_KnightAttackNoMovement_00",
           suffix: ".png",
@@ -843,7 +847,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "25397" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "31101" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
