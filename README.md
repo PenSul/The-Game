@@ -40,7 +40,7 @@ The objective of this project is to revive the nostalgic charm of playing flash 
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
 ### Built With
-* [![Phaser][Phaser.js]][Phaser-url]
+[![Phaser][Phaser.js]][Phaser-url]
 
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
