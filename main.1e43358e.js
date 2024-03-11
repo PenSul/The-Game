@@ -209,10 +209,6 @@ var LoadScene = exports.LoadScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.load.image("PlayButton", "./assets/Knight_LoadScene/PlayButton.png");
       this.load.image("PKModeButton", "./assets/Knight_LoadScene/PKModeButton.png");
       this.load.audio("Knight_LoadScene_BGM", "./assets/Knight_LoadScene/Knight_LoadScene_Music.mp3");
-      this.load.spritesheet("_Run", "./assets/FreeKnight_v1/Colour1/NoOutline/120x80_PNGSheets/_Run.png", {
-        frameWidth: 120,
-        frameHeight: 80
-      });
 
       // Loading Bar cuz why not, its more fancy :)
       var progressBar = this.add.graphics();
@@ -334,7 +330,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
 
       // Animation
       this.anims.create({
-        key: "KnightRun",
+        key: "KnightMenuRun",
         frameRate: 20,
         frames: this.anims.generateFrameNames("Characters", {
           prefix: "_KnightRun_00",
@@ -371,7 +367,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       play.setInteractive();
       play.on("pointerover", function () {
         hoverSprites.setVisible(true);
-        hoverSprites.play("KnightRun");
+        hoverSprites.play("KnightMenuRun");
         hoverSprites.x = play.x - play.width;
         hoverSprites.y = play.y - 50;
       });
@@ -385,7 +381,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       option.setInteractive();
       option.on("pointerover", function () {
         hoverSprites.setVisible(true);
-        hoverSprites.play("KnightRun");
+        hoverSprites.play("KnightMenuRun");
         hoverSprites.x = option.x - option.width;
         hoverSprites.y = option.y - 50;
       });
@@ -399,7 +395,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       pk.setInteractive();
       pk.on("pointerover", function () {
         hoverSprites.setVisible(true);
-        hoverSprites.play("KnightRun");
+        hoverSprites.play("KnightMenuRun");
         hoverSprites.x = pk.x - pk.width;
         hoverSprites.y = pk.y - 50;
       });
@@ -413,7 +409,44 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
   }]);
   return MenuScene;
 }(Phaser.Scene);
-},{"../CST.js":"src/CST.js"}],"src/Scenes/PlayScene.js":[function(require,module,exports) {
+},{"../CST.js":"src/CST.js"}],"src/KnightSprites.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.KnightSprites = void 0;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var KnightSprites = exports.KnightSprites = /*#__PURE__*/function (_Phaser$Physics$Arcad) {
+  _inherits(KnightSprites, _Phaser$Physics$Arcad);
+  function KnightSprites(scene, x, y, texture, frame) {
+    var _this;
+    _classCallCheck(this, KnightSprites);
+    _this = _callSuper(this, KnightSprites, [scene, x, y, texture, frame]);
+    _this.scene.sys.updateList.add(_assertThisInitialized(_this));
+    _this.scene.sys.displayList.add(_assertThisInitialized(_this));
+    _this.hp = 100;
+    _this.exp = 0;
+    _this.level = 1;
+    _this.setScale(1.25);
+    _this.scene.physics.world.enableBody(_assertThisInitialized(_this));
+    return _this;
+  }
+  return _createClass(KnightSprites);
+}(Phaser.Physics.Arcade.Sprite);
+},{}],"src/Scenes/PlayScene.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -421,6 +454,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PlayScene = void 0;
 var _CST = require("../CST.js");
+var _KnightSprites = require("../KnightSprites.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
@@ -446,13 +480,13 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
     _this.startTime = 0;
     _this.elapsedTime = 0;
     _this.gameEvents = [{
-      time: 10,
+      time: 600,
       event: _this.performEvent1.bind(_assertThisInitialized(_this))
     }, {
-      time: 30,
+      time: 1200,
       event: _this.performEvent2.bind(_assertThisInitialized(_this))
     }, {
-      time: 60,
+      time: 1800,
       event: _this.performEvent3.bind(_assertThisInitialized(_this))
     }];
     _this.gameObjects = [{
@@ -517,7 +551,8 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           suffix: ".png",
           start: 0,
           end: 9
-        })
+        }),
+        delay: 200
       });
       // Knight Idle
       this.anims.create({
@@ -542,6 +577,413 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           end: 9
         }),
         repeat: -1
+      });
+
+      // Flying Eye Attack
+      this.anims.create({
+        key: "FlyingEyeAttack",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FlyingEyeAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
+      // Flying Eye Death
+      this.anims.create({
+        key: "FlyingEyeDeath",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FlyingEyeDeath_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Flying Eye Flight
+      this.anims.create({
+        key: "FlyingEyeMove",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FlyingEyeFlight_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        }),
+        repeat: -1
+      });
+      // Flying Eye Take Hit
+      this.anims.create({
+        key: "FlyingEyeTakeHit",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FlyingEyeTakeHit_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+
+      // Goblin Attack
+      this.anims.create({
+        key: "GoblinAttack",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_GoblinAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
+      // Goblin Death
+      this.anims.create({
+        key: "GoblinDeath",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_GoblinDeath_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Goblin Idle
+      this.anims.create({
+        key: "GoblinIdle",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_GoblinIdle_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Goblin Run
+      this.anims.create({
+        key: "GoblinMove",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_GoblinRun_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        }),
+        repeat: -1
+      });
+      // Goblin Take Hit
+      this.anims.create({
+        key: "GoblinTakeHit",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_GoblinTakeHit_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+
+      // Mushroom Attack
+      this.anims.create({
+        key: "MushroomAttack",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_MushroomAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
+      // Mushroom Death
+      this.anims.create({
+        key: "MushroomDeath",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_MushroomDeath_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Mushroom Idle
+      this.anims.create({
+        key: "MushroomIdle",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_MushroomIdle_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Mushroom Run
+      this.anims.create({
+        key: "MushroomMove",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_MushroomRun_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        }),
+        repeat: -1
+      });
+      // Mushroom Take Hit
+      this.anims.create({
+        key: "MushroomTakeHit",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_MushroomTakeHit_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+
+      // Skeleton Attack
+      this.anims.create({
+        key: "SkeletonAttack",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_SkeletonAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
+      // Skeleton Death
+      this.anims.create({
+        key: "SkeletonDeath",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_SkeletonDeath_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Skeleton Idle
+      this.anims.create({
+        key: "SkeletonIdle",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_SkeletonIdle_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Skeleton Shield
+      this.anims.create({
+        key: "SkeletonShield",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_SkeletonShield_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Skeleton Take Hit
+      this.anims.create({
+        key: "SkeletonTakeHit",
+        frameRate: 8,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_SkeletonTakeHit_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        })
+      });
+      // Skeleton Walk
+      this.anims.create({
+        key: "SkeletonMove",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_SkeletonWalk_00",
+          suffix: ".png",
+          start: 0,
+          end: 3
+        }),
+        repeat: -1
+      });
+
+      // Bringer Of Death Attack
+      this.anims.create({
+        key: "BringerOfDeathAttack",
+        frameRate: 20,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_BringerOfDeathAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 9
+        })
+      });
+      // Bringer Of Death Cast
+      this.anims.create({
+        key: "BringerOfDeathCast",
+        frameRate: 18,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_BringerOfDeathCast_00",
+          suffix: ".png",
+          start: 0,
+          end: 8
+        })
+      });
+      // Bringer Of Death Death
+      this.anims.create({
+        key: "BringerOfDeathDeath",
+        frameRate: 20,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_BringerOfDeathDeath_00",
+          suffix: ".png",
+          start: 0,
+          end: 9
+        })
+      });
+      // Bringer Of Death Idle
+      this.anims.create({
+        key: "BringerOfDeathIdle",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_BringerOfDeathIdle_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
+      // Bringer Of Death Take Hit
+      this.anims.create({
+        key: "BringerOfDeathTakeHit",
+        frameRate: 6,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_BringerOfDeathTakeHit_00",
+          suffix: ".png",
+          start: 0,
+          end: 2
+        })
+      });
+      // Bringer Of Death Walk
+      this.anims.create({
+        key: "BringerOfDeathMove",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_BringerOfDeathWalk_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
+
+      // Demon Slime Attack
+      this.anims.create({
+        key: "DemonSlimeAttack",
+        frameRate: 30,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_DemonSlimeAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 14
+        })
+      });
+      // Demon Slime Death
+      this.anims.create({
+        key: "DemonSlimeDeath",
+        frameRate: 44,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_DemonSlimeDeath_00",
+          suffix: ".png",
+          start: 0,
+          end: 21
+        })
+      });
+      // Demon Slime Idle
+      this.anims.create({
+        key: "DemonSlimeIdle",
+        frameRate: 12,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_DemonSlimeIdle_00",
+          suffix: ".png",
+          start: 0,
+          end: 5
+        })
+      });
+      // Demon Slime Take Hit
+      this.anims.create({
+        key: "DemonSlimeTakeHit",
+        frameRate: 10,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_DemonSlimeTakeHit_00",
+          suffix: ".png",
+          start: 0,
+          end: 4
+        })
+      });
+      // Demon Slime Walk
+      this.anims.create({
+        key: "DemonSlimeMove",
+        frameRate: 24,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_DemonSlimeWalk_00",
+          suffix: ".png",
+          start: 0,
+          end: 11
+        })
+      });
+
+      // Frost Guardian Attack
+      this.anims.create({
+        key: "FrostGuardianAttack",
+        frameRate: 28,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FrostGuardianAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 13
+        })
+      });
+      // Frost Guardian Death
+      this.anims.create({
+        key: "FrostGuardianDeath",
+        frameRate: 32,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FrostGuardianDeath_00",
+          suffix: ".png",
+          start: 0,
+          end: 15
+        })
+      });
+      // Frost Guardian Idle
+      this.anims.create({
+        key: "FrostGuardianIdle",
+        frameRate: 12,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FrostGuardianIdle_00",
+          suffix: ".png",
+          start: 0,
+          end: 5
+        })
+      });
+      // Frost Guardian Take Hit
+      this.anims.create({
+        key: "FrostGuardianTakeHit",
+        frameRate: 14,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FrostGuardianTakeHit_00",
+          suffix: ".png",
+          start: 0,
+          end: 6
+        })
+      });
+      // Frost Guardian Walk
+      this.anims.create({
+        key: "FrostGuardianMove",
+        frameRate: 20,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FrostGuardianWalk_00",
+          suffix: ".png",
+          start: 0,
+          end: 9
+        })
       });
     }
   }, {
@@ -595,7 +1037,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         atlas: "Simple_Characters_Boss_3",
         frame: "FrostGuardian.png"
       });
-      var Character_Knight = this.physics.add.sprite(400, 200, "Character_Knight").setScale(1.25);
+      var Character_Knight = new _KnightSprites.KnightSprites(this, 400, 200, "Character_Knight");
       window.Character_Knight = Character_Knight;
 
       // Keyboard Input
@@ -608,33 +1050,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
 
       // Start the stopwatch
       this.startStopwatch();
-
-      // this.spawnGameObjects(2000, 60000);
-    }
-
-    // Spawner
-  }, {
-    key: "spawnGameObjects",
-    value: function spawnGameObjects(spawnRate, endTime) {
-      var _this2 = this;
-      this.time.addEvent({
-        delay: spawnRate,
-        callback: function callback() {
-          var randomIndex = Phaser.Math.Between(0, _this2.gameObjects.length - 1);
-          var gameObject = _this2.gameObjects[randomIndex];
-          var x = Phaser.Math.Between(0, _this2.sys.game.config.width);
-          var y = Phaser.Math.Between(0, _this2.sys.game.config.height);
-          _this2.physics.add.sprite(x, y, gameObject.key).setScale(1.25);
-
-          // Check if the current time has exceeded the end time
-          var currentTime = _this2.getTimeElapsed();
-          if (currentTime >= endTime) {
-            _this2.time.removeEvent(_this2.spawnTimer);
-          }
-        },
-        callbackScope: this,
-        loop: true
-      });
     }
   }, {
     key: "update",
@@ -703,21 +1118,30 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
     key: "performEvent1",
     value: function performEvent1() {
       console.log("Performing Event 1");
+      var x = Phaser.Math.Between(0, this.sys.game.config.width);
+      var y = Phaser.Math.Between(0, this.sys.game.config.height);
+      this.physics.add.sprite(x, y, "Character_BringerOfDeath").setScale(1.25);
     }
   }, {
     key: "performEvent2",
     value: function performEvent2() {
       console.log("Performing Event 2");
+      var x = Phaser.Math.Between(0, this.sys.game.config.width);
+      var y = Phaser.Math.Between(0, this.sys.game.config.height);
+      this.physics.add.sprite(x, y, "Character_FrostGuardian").setScale(1.25);
     }
   }, {
     key: "performEvent3",
     value: function performEvent3() {
       console.log("Performing Event 3");
+      var x = Phaser.Math.Between(0, this.sys.game.config.width);
+      var y = Phaser.Math.Between(0, this.sys.game.config.height);
+      this.physics.add.sprite(x, y, "Character_DemonSlime").setScale(1.25);
     }
   }]);
   return PlayScene;
 }(Phaser.Scene);
-},{"../CST.js":"src/CST.js"}],"src/Scenes/PKScene.js":[function(require,module,exports) {
+},{"../CST.js":"src/CST.js","../KnightSprites.js":"src/KnightSprites.js"}],"src/Scenes/PKScene.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -847,7 +1271,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "31101" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "23528" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
