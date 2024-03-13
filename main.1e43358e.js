@@ -409,7 +409,42 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
   }]);
   return MenuScene;
 }(Phaser.Scene);
-},{"../CST.js":"src/CST.js"}],"src/KnightSprites.js":[function(require,module,exports) {
+},{"../CST.js":"src/CST.js"}],"src/EnemySprites.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EnemySprites = void 0;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics$Arcad) {
+  _inherits(EnemySprites, _Phaser$Physics$Arcad);
+  function EnemySprites(scene, x, y, texture, hp, attackdamage) {
+    var _this;
+    _classCallCheck(this, EnemySprites);
+    _this = _callSuper(this, EnemySprites, [scene, x, y, texture]);
+    _this.hp = hp;
+    _this.attackdamage = attackdamage;
+    _this.scene.sys.updateList.add(_assertThisInitialized(_this));
+    _this.scene.sys.displayList.add(_assertThisInitialized(_this));
+    _this.scene.physics.world.enableBody(_assertThisInitialized(_this));
+    return _this;
+  }
+  return _createClass(EnemySprites);
+}(Phaser.Physics.Arcade.Sprite);
+},{}],"src/KnightSprites.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -431,15 +466,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 var KnightSprites = exports.KnightSprites = /*#__PURE__*/function (_Phaser$Physics$Arcad) {
   _inherits(KnightSprites, _Phaser$Physics$Arcad);
-  function KnightSprites(scene, x, y, texture, frame) {
+  function KnightSprites(scene, x, y, texture, hp, exp, level, attackdamage) {
     var _this;
     _classCallCheck(this, KnightSprites);
-    _this = _callSuper(this, KnightSprites, [scene, x, y, texture, frame]);
+    _this = _callSuper(this, KnightSprites, [scene, x, y, texture]);
     _this.scene.sys.updateList.add(_assertThisInitialized(_this));
     _this.scene.sys.displayList.add(_assertThisInitialized(_this));
-    _this.hp = 100;
-    _this.exp = 0;
-    _this.level = 1;
+    _this.hp = hp;
+    _this.exp = exp;
+    _this.level = level;
+    _this.attackdamage = attackdamage;
     _this.setScale(1.25);
     _this.scene.physics.world.enableBody(_assertThisInitialized(_this));
     return _this;
@@ -454,6 +490,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PlayScene = void 0;
 var _CST = require("../CST.js");
+var _EnemySprites = require("../EnemySprites.js");
 var _KnightSprites = require("../KnightSprites.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -489,30 +526,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       time: 1800,
       event: _this.performEvent3.bind(_assertThisInitialized(_this))
     }];
-    _this.gameObjects = [{
-      key: "Character_FlyingEye",
-      texture: "FlyingEye.png"
-    }, {
-      key: "Character_Goblin",
-      texture: "Goblin.png"
-    }, {
-      key: "Character_Mushroom",
-      texture: "Mushroom.png"
-    }, {
-      key: "Character_Skeleton",
-      texture: "Skeleton.png"
-    }, {
-      key: "Character_BringerOfDeath",
-      texture: "BringerOfDeath.png"
-    }, {
-      key: "Character_FrostGuardian",
-      texture: "FrostGuardian.png"
-    }, {
-      key: "Character_DemonSlime",
-      texture: "DemonSlime.png"
-    }
-    // Add more game objects here
-    ];
     return _this;
   }
   _createClass(PlayScene, [{
@@ -527,30 +540,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           suffix: ".png",
           start: 0,
           end: 3
-        }),
-        delay: 200
-      });
-      // Knight Attack No Movement
-      this.anims.create({
-        key: "KnightAttackNoMovement",
-        frameRate: 6,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_KnightAttackNoMovement_00",
-          suffix: ".png",
-          start: 0,
-          end: 3
-        }),
-        delay: 200
-      });
-      // Knight Attack Combo
-      this.anims.create({
-        key: "KnightAttackCombo",
-        frameRate: 10,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_KnightCombo_00",
-          suffix: ".png",
-          start: 0,
-          end: 9
         }),
         delay: 200
       });
@@ -578,18 +567,18 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         }),
         repeat: -1
       });
-
-      // Flying Eye Attack
+      // Knight Death
       this.anims.create({
-        key: "FlyingEyeAttack",
-        frameRate: 16,
+        key: "KnightDeath",
+        frameRate: 20,
         frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_FlyingEyeAttack_00",
+          prefix: "_KnightDeath_00",
           suffix: ".png",
           start: 0,
-          end: 7
+          end: 9
         })
       });
+
       // Flying Eye Death
       this.anims.create({
         key: "FlyingEyeDeath",
@@ -625,34 +614,12 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         })
       });
 
-      // Goblin Attack
-      this.anims.create({
-        key: "GoblinAttack",
-        frameRate: 16,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_GoblinAttack_00",
-          suffix: ".png",
-          start: 0,
-          end: 7
-        })
-      });
       // Goblin Death
       this.anims.create({
         key: "GoblinDeath",
         frameRate: 8,
         frames: this.anims.generateFrameNames("Characters", {
           prefix: "_GoblinDeath_00",
-          suffix: ".png",
-          start: 0,
-          end: 3
-        })
-      });
-      // Goblin Idle
-      this.anims.create({
-        key: "GoblinIdle",
-        frameRate: 8,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_GoblinIdle_00",
           suffix: ".png",
           start: 0,
           end: 3
@@ -682,34 +649,12 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         })
       });
 
-      // Mushroom Attack
-      this.anims.create({
-        key: "MushroomAttack",
-        frameRate: 16,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_MushroomAttack_00",
-          suffix: ".png",
-          start: 0,
-          end: 7
-        })
-      });
       // Mushroom Death
       this.anims.create({
         key: "MushroomDeath",
         frameRate: 8,
         frames: this.anims.generateFrameNames("Characters", {
           prefix: "_MushroomDeath_00",
-          suffix: ".png",
-          start: 0,
-          end: 3
-        })
-      });
-      // Mushroom Idle
-      this.anims.create({
-        key: "MushroomIdle",
-        frameRate: 8,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_MushroomIdle_00",
           suffix: ".png",
           start: 0,
           end: 3
@@ -739,45 +684,12 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         })
       });
 
-      // Skeleton Attack
-      this.anims.create({
-        key: "SkeletonAttack",
-        frameRate: 16,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_SkeletonAttack_00",
-          suffix: ".png",
-          start: 0,
-          end: 7
-        })
-      });
       // Skeleton Death
       this.anims.create({
         key: "SkeletonDeath",
         frameRate: 8,
         frames: this.anims.generateFrameNames("Characters", {
           prefix: "_SkeletonDeath_00",
-          suffix: ".png",
-          start: 0,
-          end: 3
-        })
-      });
-      // Skeleton Idle
-      this.anims.create({
-        key: "SkeletonIdle",
-        frameRate: 8,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_SkeletonIdle_00",
-          suffix: ".png",
-          start: 0,
-          end: 3
-        })
-      });
-      // Skeleton Shield
-      this.anims.create({
-        key: "SkeletonShield",
-        frameRate: 8,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_SkeletonShield_00",
           suffix: ".png",
           start: 0,
           end: 3
@@ -985,10 +897,13 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           end: 9
         })
       });
+      this.load.tilemapTiledJSON("mappy", "./assets/maps/mappy.json");
+      this.load.image("terrain", "./assets/Knight_LoadScene/ashlands_tileset.png");
     }
   }, {
     key: "create",
     value: function create() {
+      var _this2 = this;
       this.textures.addSpriteSheetFromAtlas("Character_Knight", {
         frameWidth: 120,
         frameHeight: 80,
@@ -1037,19 +952,84 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         atlas: "Simple_Characters_Boss_3",
         frame: "FrostGuardian.png"
       });
-      var Character_Knight = new _KnightSprites.KnightSprites(this, 400, 200, "Character_Knight");
+
+      // Load Map
+      var mappy = this.add.tilemap("mappy");
+      var terrain = mappy.addTilesetImage("ashlands_tileset", "terrain");
+      var bottomlayer = mappy.createLayer("Bottom", [terrain], 0, 0);
+      var middlelayer = mappy.createLayer("Middle", [terrain], 0, 0);
+      var toplayer = mappy.createLayer("Top", [terrain], 0, 0);
+
+      // Character
+      var Character_Knight = new _KnightSprites.KnightSprites(this, 400, 200, "Character_Knight", 100, 0, 1, 20).setSize(25, 45, true).setOffset(40, 35);
       window.Character_Knight = Character_Knight;
+
+      // Map physics
+      this.physics.add.collider(Character_Knight, toplayer);
+      toplayer.setCollisionByProperty({
+        collides: true
+      });
+      this.cameras.main.startFollow(Character_Knight);
+      this.physics.world.setBounds(0, 0, mappy.widthInPixels, mappy.heightInPixels);
 
       // Keyboard Input
       this.keyboard = this.input.keyboard.addKeys("W, A, S, D, J");
-      this.stopwatchText = this.add.text(this.sys.game.config.width / 2, 10, "00:00:00", {
+
+      // Stopwatch Text
+      this.stopwatchText = this.add.text(this.cameras.main.width / 2, 10, "00:00:00", {
         fontFamily: "Monospace",
         fontSize: 24,
         color: "#ffffff"
-      }).setOrigin(0.5, 0);
+      }).setOrigin(0.5, 0).setScrollFactor(0).setDepth(1000);
+
+      // HP Text
+      this.hptext = this.add.text(10, 10, "HP: " + Character_Knight.hp, {
+        fontFamily: "Monospace",
+        fontSize: 24,
+        color: "#ffffff"
+      }).setOrigin(0, 0).setScrollFactor(0).setDepth(1000);
+
+      // Level Text
+      this.leveltext = this.add.text(this.cameras.main.width - 10, 10, "Level: " + Character_Knight.level, {
+        fontFamily: "Monospace",
+        fontSize: 24,
+        color: "#ffffff"
+      }).setOrigin(1, 0).setScrollFactor(0).setDepth(1000);
 
       // Start the stopwatch
       this.startStopwatch();
+
+      // Mob Spawning and Moving
+      var spawnRadius = 300;
+      var spawnRate = 700;
+      var spawnZone = new Phaser.Geom.Circle(Character_Knight.x + spawnRadius, Character_Knight.y, spawnRadius * 2);
+      var spawnInterval = this.time.addEvent({
+        delay: spawnRate,
+        callback: function callback() {
+          var spawnPoint = new Phaser.Math.Vector2(Phaser.Math.Between(spawnZone.left, spawnZone.right), Phaser.Math.Between(spawnZone.top, spawnZone.bottom));
+          var mob = Math.floor(Math.random() * 4) + 1;
+          switch (mob) {
+            case 1:
+              var enemyGoblin = _this2.physics.add.existing(new _EnemySprites.EnemySprites(_this2, spawnPoint.x, spawnPoint.y, "Character_Goblin", 100, 5));
+              _this2.physics.accelerateToObject(enemyGoblin, Character_Knight);
+              break;
+            case 2:
+              var enemyMushroom = _this2.physics.add.existing(new _EnemySprites.EnemySprites(_this2, spawnPoint.x, spawnPoint.y, "Character_Mushroom", 100, 3));
+              _this2.physics.accelerateToObject(enemyMushroom, Character_Knight);
+              break;
+            case 3:
+              var enemySkeleton = _this2.physics.add.existing(new _EnemySprites.EnemySprites(_this2, spawnPoint.x, spawnPoint.y, "Character_Skeleton", 100, 10));
+              _this2.physics.accelerateToObject(enemySkeleton, Character_Knight);
+              break;
+            case 4:
+              var enemyFlyingEye = _this2.physics.add.existing(new _EnemySprites.EnemySprites(_this2, spawnPoint.x, spawnPoint.y, "Character_FlyingEye", 100, 15));
+              _this2.physics.accelerateToObject(enemyFlyingEye, Character_Knight);
+              break;
+          }
+        },
+        callbackScope: this,
+        loop: true
+      });
     }
   }, {
     key: "update",
@@ -1071,7 +1051,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.J.isDown) {
         Character_Knight.setVelocityX(0).setVelocityY(0);
-        Character_Knight.anims.play("KnightAttackNoMovement", {
+        Character_Knight.anims.play("KnightAttack", {
           onComplete: function onComplete() {
             Character_Knight.anims.play("KnightIdle", true);
           }
@@ -1098,6 +1078,10 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         }
       });
       this.elapsedTime = this.getTimeElapsed();
+
+      // Hp and Level
+      this.hptext.setText("HP: " + Character_Knight.hp);
+      this.leveltext.setText("Level: " + Character_Knight.level);
     }
   }, {
     key: "startStopwatch",
@@ -1141,7 +1125,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
   }]);
   return PlayScene;
 }(Phaser.Scene);
-},{"../CST.js":"src/CST.js","../KnightSprites.js":"src/KnightSprites.js"}],"src/Scenes/PKScene.js":[function(require,module,exports) {
+},{"../CST.js":"src/CST.js","../EnemySprites.js":"src/EnemySprites.js","../KnightSprites.js":"src/KnightSprites.js"}],"src/Scenes/PKScene.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1271,7 +1255,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "23528" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "22982" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
