@@ -1,0 +1,216 @@
+{ "compressionlevel":-1,
+ "height":15,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+            3, 3, 3, 91, 3, 3, 91, 3, 3, 3, 91, 3, 3, 91, 3,
+            3, 3, 3, 76, 3, 3, 3, 3, 3, 3, 3, 76, 3, 3, 3,
+            3, 3, 76, 91, 3, 3, 3, 91, 3, 91, 3, 3, 76, 3, 3,
+            3, 91, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+            3, 3, 3, 3, 3, 3, 91, 3, 3, 3, 3, 3, 3, 3, 3,
+            3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+            3, 3, 3, 3, 91, 3, 76, 91, 76, 3, 3, 3, 3, 91, 3,
+            3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+            3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 91, 3, 3, 3,
+            3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+            3, 91, 76, 3, 3, 91, 3, 91, 3, 3, 3, 3, 76, 3, 3,
+            3, 3, 3, 76, 3, 3, 3, 3, 3, 3, 3, 76, 3, 3, 3,
+            3, 91, 3, 3, 3, 3, 3, 91, 3, 3, 3, 3, 3, 3, 3,
+            3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+         "height":15,
+         "id":1,
+         "name":"background",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[92, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 92,
+            92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 92,
+            92, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 92,
+            92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 92,
+            92, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 92,
+            92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 92,
+            92, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 92,
+            92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 92,
+            92, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 92,
+            92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 92,
+            92, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 92,
+            92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 92,
+            92, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 76, 0, 92,
+            92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 92,
+            76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76],
+         "height":15,
+         "id":2,
+         "name":"walls",
+         "opacity":1,
+         "properties":[
+                {
+                 "name":"collision",
+                 "type":"string",
+                 "value":"true"
+                }],
+         "type":"tilelayer",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 91, 0, 91, 0, 0, 0, 0, 0, 91, 0, 91, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 91, 0, 0, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 91, 0, 0, 0, 91, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 91, 0, 0, 0, 0, 0, 0, 0, 91, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":15,
+         "id":3,
+         "name":"blocks",
+         "opacity":1,
+         "properties":[
+                {
+                 "name":"collision",
+                 "type":"string",
+                 "value":"true"
+                }],
+         "type":"tilelayer",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":4,
+         "name":"objects",
+         "objects":[
+                {
+                 "gid":66,
+                 "height":16,
+                 "id":1,
+                 "name":"player1",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"65"
+                        }, 
+                        {
+                         "name":"group",
+                         "type":"string",
+                         "value":"players"
+                        }, 
+                        {
+                         "name":"number_of_bombs",
+                         "type":"string",
+                         "value":"1"
+                        }, 
+                        {
+                         "name":"number_of_lives",
+                         "type":"string",
+                         "value":"3"
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"player_spritesheet"
+                        }, 
+                        {
+                         "name":"walking_speed",
+                         "type":"string",
+                         "value":"50"
+                        }],
+                 "rotation":0,
+                 "type":"player",
+                 "visible":true,
+                 "width":16,
+                 "x":16,
+                 "y":32
+                }, 
+                {
+                 "gid":66,
+                 "height":16,
+                 "id":2,
+                 "name":"player2",
+                 "properties":[
+                        {
+                         "name":"frame",
+                         "type":"string",
+                         "value":"65"
+                        }, 
+                        {
+                         "name":"group",
+                         "type":"string",
+                         "value":"players"
+                        }, 
+                        {
+                         "name":"number_of_bombs",
+                         "type":"string",
+                         "value":"1"
+                        }, 
+                        {
+                         "name":"number_of_lives",
+                         "type":"string",
+                         "value":"3"
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"player_spritesheet"
+                        }, 
+                        {
+                         "name":"walking_speed",
+                         "type":"string",
+                         "value":"50"
+                        }],
+                 "rotation":0,
+                 "type":"player",
+                 "visible":true,
+                 "width":16,
+                 "x":208,
+                 "y":224
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":5,
+ "nextobjectid":3,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.10.2",
+ "tileheight":16,
+ "tilesets":[
+        {
+         "columns":16,
+         "firstgid":1,
+         "image":"..\/images\/bomberman_spritesheet.png",
+         "imageheight":96,
+         "imagewidth":256,
+         "margin":0,
+         "name":"bomberman_spritesheet",
+         "spacing":0,
+         "tilecount":96,
+         "tileheight":16,
+         "tilewidth":16
+        }],
+ "tilewidth":16,
+ "type":"map",
+ "version":"1.10",
+ "width":15
+}

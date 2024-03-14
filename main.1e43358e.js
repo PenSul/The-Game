@@ -128,9 +128,7 @@ var CST = exports.CST = {
   SCENES: {
     LOAD: "LOAD",
     MENU: "MENU",
-    PLAY: "PLAY",
-    PK: "PK",
-    OPTION: "OPTION"
+    PLAY: "PLAY"
   },
   IMAGES: {
     LOAD: "Logo.png",
@@ -185,6 +183,7 @@ var LoadScene = exports.LoadScene = /*#__PURE__*/function (_Phaser$Scene) {
     key: "preload",
     value: function preload() {
       // Load atlas
+      this.load.atlas("Effects", "./assets/EffectSprites/effects.png", "./assets/EffectSprites/effects_atlas.json");
       this.load.atlas("Characters", "./assets/CharactersSprites/Characters.png", "./assets/CharactersSprites/Characters.json");
       this.load.atlas("Simple_Characters_Enemy", "./assets/CharactersSprites/Simple_Characters_Enemy.png", "./assets/CharactersSprites/Simple_Characters_Enemy.json");
       this.load.atlas("Simple_Characters_Enemy_2", "./assets/CharactersSprites/Simple_Characters_Enemy_2.png", "./assets/CharactersSprites/Simple_Characters_Enemy_2.json");
@@ -320,8 +319,6 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.add.image(0, 0, "background_layer_2").setOrigin(0).setScale(3.75).setDepth(0);
       this.add.image(0, 0, "background_layer_3").setOrigin(0).setScale(3.75).setDepth(0);
       var play = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2 - 20, "PlayButton").setDepth(1);
-      var pk = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2 + 55, "PKModeButton").setDepth(1);
-      var option = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2 + 130, "OptionButton").setDepth(1);
 
       // Sprites
       var hoverSprites = this.add.sprite(100, 100, "_Run");
@@ -352,7 +349,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
 
       this.sound.play("Knight_LoadScene_BGM", {
         loop: true,
-        volume: 0.15 // Change this to 1 or 0.5 when finish <-------------------
+        volume: 0.15
       });
 
       //Interactive thingy
@@ -376,34 +373,6 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       });
       play.on("pointerup", function () {
         _this.scene.start(_CST.CST.SCENES.PLAY);
-      });
-      //OptionButoon
-      option.setInteractive();
-      option.on("pointerover", function () {
-        hoverSprites.setVisible(true);
-        hoverSprites.play("KnightMenuRun");
-        hoverSprites.x = option.x - option.width;
-        hoverSprites.y = option.y - 50;
-      });
-      option.on("pointerout", function () {
-        hoverSprites.setVisible(false);
-      });
-      option.on("pointerup", function () {
-        _this.scene.start(_CST.CST.SCENES.OPTION);
-      });
-      //PKModeButton
-      pk.setInteractive();
-      pk.on("pointerover", function () {
-        hoverSprites.setVisible(true);
-        hoverSprites.play("KnightMenuRun");
-        hoverSprites.x = pk.x - pk.width;
-        hoverSprites.y = pk.y - 50;
-      });
-      pk.on("pointerout", function () {
-        hoverSprites.setVisible(false);
-      });
-      pk.on("pointerup", function () {
-        _this.scene.start(_CST.CST.SCENES.PK);
       });
     }
   }]);
@@ -431,15 +400,47 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics$Arcad) {
   _inherits(EnemySprites, _Phaser$Physics$Arcad);
-  function EnemySprites(scene, x, y, texture, hp, attackdamage) {
+  function EnemySprites(scene, x, y, texture, hp, attackdamage, speed, exp) {
     var _this;
     _classCallCheck(this, EnemySprites);
     _this = _callSuper(this, EnemySprites, [scene, x, y, texture]);
     _this.hp = hp;
     _this.attackdamage = attackdamage;
-    _this.scene.sys.updateList.add(_assertThisInitialized(_this));
-    _this.scene.sys.displayList.add(_assertThisInitialized(_this));
-    _this.scene.physics.world.enableBody(_assertThisInitialized(_this));
+    _this.speed = speed;
+    _this.exp = exp;
+    scene.sys.updateList.add(_assertThisInitialized(_this));
+    scene.sys.displayList.add(_assertThisInitialized(_this));
+    scene.physics.world.enableBody(_assertThisInitialized(_this));
+    _this.setSize(40, 40, true);
+
+    // Goblin
+    if (texture === 'Character_Goblin') {
+      _this.hp = 6;
+      _this.speed = 30;
+      _this.attackdamage = 1;
+      _this.exp = 1;
+    }
+    // Skeleton
+    if (texture === 'Character_Skeleton') {
+      _this.hp = 12;
+      _this.speed = 60;
+      _this.attackdamage = 2;
+      _this.exp = 2;
+    }
+    // FlyingEye
+    if (texture === 'Character_FlyingEye') {
+      _this.hp = 15;
+      _this.speed = 50;
+      _this.attackdamage = 3;
+      _this.exp = 3;
+    }
+    // Mushroom
+    if (texture === 'Character_Mushroom') {
+      _this.hp = 20;
+      _this.speed = 40;
+      _this.attackdamage = 4;
+      _this.exp = 1;
+    }
     return _this;
   }
   return _createClass(EnemySprites);
@@ -470,14 +471,14 @@ var KnightSprites = exports.KnightSprites = /*#__PURE__*/function (_Phaser$Physi
     var _this;
     _classCallCheck(this, KnightSprites);
     _this = _callSuper(this, KnightSprites, [scene, x, y, texture]);
-    _this.scene.sys.updateList.add(_assertThisInitialized(_this));
-    _this.scene.sys.displayList.add(_assertThisInitialized(_this));
+    scene.sys.updateList.add(_assertThisInitialized(_this));
+    scene.sys.displayList.add(_assertThisInitialized(_this));
+    scene.physics.world.enableBody(_assertThisInitialized(_this));
     _this.hp = hp;
     _this.exp = exp;
     _this.level = level;
     _this.attackdamage = attackdamage;
     _this.setScale(1.25);
-    _this.scene.physics.world.enableBody(_assertThisInitialized(_this));
     return _this;
   }
   return _createClass(KnightSprites);
@@ -534,14 +535,13 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       // Knight Attack
       this.anims.create({
         key: "KnightAttack",
-        frameRate: 6,
+        frameRate: 4,
         frames: this.anims.generateFrameNames("Characters", {
           prefix: "_KnightAttack_00",
           suffix: ".png",
           start: 0,
           end: 3
-        }),
-        delay: 200
+        })
       });
       // Knight Idle
       this.anims.create({
@@ -579,6 +579,17 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         })
       });
 
+      // Flying Eye Attack
+      this.anims.create({
+        key: "FlyingEyeAttack",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_FlyingEyeAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
       // Flying Eye Death
       this.anims.create({
         key: "FlyingEyeDeath",
@@ -614,6 +625,17 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         })
       });
 
+      // Goblin Attack
+      this.anims.create({
+        key: "GoblinAttack",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_GoblinAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
       // Goblin Death
       this.anims.create({
         key: "GoblinDeath",
@@ -649,6 +671,17 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         })
       });
 
+      // Mushroom Attack
+      this.anims.create({
+        key: "MushroomAttack",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_MushroomAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
       // Mushroom Death
       this.anims.create({
         key: "MushroomDeath",
@@ -684,6 +717,17 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         })
       });
 
+      // Skeleton Attack
+      this.anims.create({
+        key: "SkeletonAttack",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Characters", {
+          prefix: "_SkeletonAttack_00",
+          suffix: ".png",
+          start: 0,
+          end: 7
+        })
+      });
       // Skeleton Death
       this.anims.create({
         key: "SkeletonDeath",
@@ -897,8 +941,64 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           end: 9
         })
       });
+
+      // Burn Effect
+      this.anims.create({
+        key: "BurnEffect",
+        frameRate: 20,
+        frames: this.anims.generateFrameNames("Effects", {
+          prefix: "_burn_00",
+          start: 0,
+          end: 9
+        })
+      });
+
+      // BurstOfIce Effect
+      this.anims.create({
+        key: "BurstOfIceEffect",
+        frameRate: 14,
+        frames: this.anims.generateFrameNames("Effects", {
+          prefix: "_burstofice_00",
+          start: 0,
+          end: 6
+        })
+      });
+
+      // Crystal Effect
+      this.anims.create({
+        key: "CrystalEffect",
+        frameRate: 12,
+        frames: this.anims.generateFrameNames("Effects", {
+          prefix: "_crystal_00",
+          start: 0,
+          end: 5
+        })
+      });
+
+      // CrystalProjectil Effect
+      this.anims.create({
+        key: "CrystalProjectileEffect",
+        frameRate: 14,
+        frames: this.anims.generateFrameNames("Effects", {
+          prefix: "_crystalprojectil_00",
+          start: 0,
+          end: 6
+        })
+      });
+
+      // Thunder Effect
+      this.anims.create({
+        key: "ThunderEffect",
+        frameRate: 16,
+        frames: this.anims.generateFrameNames("Effects", {
+          prefix: "_thunder_00",
+          start: 0,
+          end: 7
+        })
+      });
       this.load.tilemapTiledJSON("mappy", "./assets/maps/mappy.json");
       this.load.image("terrain", "./assets/Knight_LoadScene/ashlands_tileset.png");
+      this.load.image("PlayAgain", "./assets/Knight_LoadScene/PlayAgainButton.png");
     }
   }, {
     key: "create",
@@ -961,7 +1061,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       var toplayer = mappy.createLayer("Top", [terrain], 0, 0);
 
       // Character
-      var Character_Knight = new _KnightSprites.KnightSprites(this, 400, 200, "Character_Knight", 100, 0, 1, 20).setSize(25, 45, true).setOffset(40, 35);
+      var Character_Knight = new _KnightSprites.KnightSprites(this, 960, 480, "Character_Knight", 200, 0, 1, 15, 100).setSize(25, 45, true).setOffset(40, 35);
       window.Character_Knight = Character_Knight;
 
       // Map physics
@@ -972,8 +1072,22 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.cameras.main.startFollow(Character_Knight);
       this.physics.world.setBounds(0, 0, mappy.widthInPixels, mappy.heightInPixels);
 
+      // Effect
+      this.fireattack = this.physics.add.group();
+
       // Keyboard Input
       this.keyboard = this.input.keyboard.addKeys("W, A, S, D, J");
+
+      // Mouse Input
+      this.input.on('pointermove', function (pointer) {
+        if (pointer.isDown) {
+          var fire = this.physics.add.sprite(pointer.x + 370, pointer.y + 120, "BurnEffect").play("BurnEffect").setOffset(55, 55);
+          this.fireattack.add(fire);
+          fire.once('animationcomplete', function () {
+            fire.destroy();
+          });
+        }
+      }, this);
 
       // Stopwatch Text
       this.stopwatchText = this.add.text(this.cameras.main.width / 2, 10, "00:00:00", {
@@ -996,58 +1110,137 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         color: "#ffffff"
       }).setOrigin(1, 0).setScrollFactor(0).setDepth(1000);
 
+      // Exp Text
+      this.exptext = this.add.text(50, 40, "Exp: " + Character_Knight.exp, {
+        fontFamily: "Monospace",
+        fontSize: 24,
+        color: "#ffffff"
+      }).setOrigin(0.5, 0).setScrollFactor(0).setDepth(1000);
+
       // Start the stopwatch
       this.startStopwatch();
 
-      // Mob Spawning and Moving
-      var spawnRadius = 300;
-      var spawnRate = 700;
-      var spawnZone = new Phaser.Geom.Circle(Character_Knight.x + spawnRadius, Character_Knight.y, spawnRadius * 2);
-      var spawnInterval = this.time.addEvent({
-        delay: spawnRate,
-        callback: function callback() {
-          var spawnPoint = new Phaser.Math.Vector2(Phaser.Math.Between(spawnZone.left, spawnZone.right), Phaser.Math.Between(spawnZone.top, spawnZone.bottom));
-          var mob = Math.floor(Math.random() * 4) + 1;
-          switch (mob) {
+      // Spawn enemies and their animation(This part take me a long time...)
+      var spawnrate = 1000;
+      this.enemies = this.physics.add.group();
+      setInterval(function () {
+        var x = Phaser.Math.Between(0, 1920);
+        var y = Phaser.Math.Between(0, 960);
+        var distance = Phaser.Math.Distance.Between(Character_Knight.x, Character_Knight.y, x, y);
+        if (distance > 300) {
+          var enemy = Phaser.Math.Between(1, 4);
+          var enemySprite;
+          var enemyAnimationMove;
+          var enemyAnimationAttack;
+          var enemyAnimationTakeHit;
+          var enemyAnimationDeath;
+          switch (enemy) {
             case 1:
-              var enemyGoblin = _this2.physics.add.existing(new _EnemySprites.EnemySprites(_this2, spawnPoint.x, spawnPoint.y, "Character_Goblin", 100, 5));
-              _this2.physics.accelerateToObject(enemyGoblin, Character_Knight);
+              enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, "Character_Goblin", _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
+              enemyAnimationMove = "GoblinMove";
+              enemyAnimationAttack = "GoblinAttack";
+              enemyAnimationTakeHit = "GoblinTakeHit";
+              enemyAnimationDeath = "GoblinDeath";
               break;
             case 2:
-              var enemyMushroom = _this2.physics.add.existing(new _EnemySprites.EnemySprites(_this2, spawnPoint.x, spawnPoint.y, "Character_Mushroom", 100, 3));
-              _this2.physics.accelerateToObject(enemyMushroom, Character_Knight);
+              enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, "Character_Skeleton", _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
+              enemyAnimationMove = "SkeletonMove";
+              enemyAnimationAttack = "SkeletonAttack";
+              enemyAnimationTakeHit = "SkeletonTakeHit";
+              enemyAnimationDeath = "SkeletonDeath";
               break;
             case 3:
-              var enemySkeleton = _this2.physics.add.existing(new _EnemySprites.EnemySprites(_this2, spawnPoint.x, spawnPoint.y, "Character_Skeleton", 100, 10));
-              _this2.physics.accelerateToObject(enemySkeleton, Character_Knight);
+              enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, "Character_FlyingEye", _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
+              enemyAnimationMove = "FlyingEyeMove";
+              enemyAnimationAttack = "FlyingEyeAttack";
+              enemyAnimationTakeHit = "FlyingEyeTakeHit";
+              enemyAnimationDeath = "FlyingEyeDeath";
               break;
             case 4:
-              var enemyFlyingEye = _this2.physics.add.existing(new _EnemySprites.EnemySprites(_this2, spawnPoint.x, spawnPoint.y, "Character_FlyingEye", 100, 15));
-              _this2.physics.accelerateToObject(enemyFlyingEye, Character_Knight);
+              enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, "Character_Mushroom", _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
+              enemyAnimationMove = "MushroomMove";
+              enemyAnimationAttack = "MushroomAttack";
+              enemyAnimationTakeHit = "MushroomTakeHit";
+              enemyAnimationDeath = "MushroomDeath";
               break;
           }
-        },
-        callbackScope: this,
-        loop: true
-      });
+          _this2.enemies.add(enemySprite);
+          enemySprite.flipX = Character_Knight.x < enemySprite.x;
+          enemySprite.play(enemyAnimationMove, true);
+          _this2.physics.add.collider(_this2.fireattack, enemySprite, function () {
+            enemySprite.destroy();
+            Character_Knight.exp += enemySprite.exp;
+            if (Character_Knight.exp >= 100) {
+              Character_Knight.level += 1;
+              Character_Knight.exp -= 100;
+            }
+          });
+          _this2.physics.add.collider(Character_Knight, enemySprite, function () {
+            if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
+              enemySprite.anims.stop();
+              enemySprite.flipX = Character_Knight.x < enemySprite.x;
+              enemySprite.play(enemyAnimationTakeHit);
+              enemySprite.hp -= Character_Knight.attackdamage;
+              enemySprite.once("animationcomplete-" + enemyAnimationTakeHit, function () {
+                enemySprite.flipX = Character_Knight.x < enemySprite.x;
+                if (enemySprite.hp > 0) {
+                  enemySprite.play(enemyAnimationMove, true);
+                } else {
+                  enemySprite.anims.stop();
+                  enemySprite.play(enemyAnimationDeath);
+                  enemySprite.once("animationcomplete-" + enemyAnimationDeath, function () {
+                    enemySprite.destroy();
+                  });
+                }
+              });
+            } else if (enemySprite.anims.currentAnim.key !== enemyAnimationAttack) {
+              enemySprite.anims.stop();
+              enemySprite.flipX = Character_Knight.x < enemySprite.x;
+              enemySprite.play(enemyAnimationAttack);
+              Character_Knight.hp -= enemySprite.attackdamage;
+              enemySprite.once("animationcomplete-" + enemyAnimationAttack, function () {
+                enemySprite.flipX = Character_Knight.x < enemySprite.x;
+                enemySprite.play(enemyAnimationMove, true);
+              });
+            }
+          });
+        }
+      }, spawnrate);
     }
   }, {
     key: "update",
     value: function update() {
+      this.enemies.getChildren().forEach(function (enemy) {
+        // Calculate the vector from enemy to player
+        var directionX = Character_Knight.x - enemy.x;
+        var directionY = Character_Knight.y - enemy.y;
+
+        // Normalize the vector
+        var length = Math.sqrt(directionX * directionX + directionY * directionY);
+        directionX /= length;
+        directionY /= length;
+
+        // Set the enemy's velocity based on the fixed speed
+        var speed = enemy.speed;
+        enemy.body.velocity.x = directionX * speed;
+        enemy.body.velocity.y = directionY * speed;
+        enemy.flipX = Character_Knight.x < enemy.x;
+      });
+
       // Knight Movement
       if (this.keyboard.W.isDown) {
-        Character_Knight.setVelocityY(-72);
+        Character_Knight.setVelocityY(-100);
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.A.isDown) {
         Character_Knight.setFlipX(true);
-        Character_Knight.setVelocityX(-72);
+        Character_Knight.setVelocityX(-100);
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.S.isDown) {
-        Character_Knight.setVelocityY(72);
+        Character_Knight.setVelocityY(100);
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.D.isDown) {
         Character_Knight.setFlipX(false);
-        Character_Knight.setVelocityX(72);
+        Character_Knight.setVelocityX(100);
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.J.isDown) {
         Character_Knight.setVelocityX(0).setVelocityY(0);
@@ -1082,6 +1275,21 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       // Hp and Level
       this.hptext.setText("HP: " + Character_Knight.hp);
       this.leveltext.setText("Level: " + Character_Knight.level);
+      this.exptext.setText("EXP: " + Character_Knight.exp);
+
+      // Check Knight HP
+      if (Character_Knight.hp <= 0) {
+        Character_Knight.body.setVelocity(0);
+        Character_Knight.anims.isPlaying = false;
+        this.enemies.getChildren().forEach(function (enemy) {
+          enemy.body.setVelocity(0);
+          enemy.anims.isPlaying = false;
+        });
+        var playagainbutton = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "PlayAgain").setInteractive().setScale(2).setScrollFactor(0).setDepth(1000);
+        playagainbutton.on("pointerdown", function () {
+          window.location.reload();
+        });
+      }
     }
   }, {
     key: "startStopwatch",
@@ -1104,125 +1312,161 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       console.log("Performing Event 1");
       var x = Phaser.Math.Between(0, this.sys.game.config.width);
       var y = Phaser.Math.Between(0, this.sys.game.config.height);
-      this.physics.add.sprite(x, y, "Character_BringerOfDeath").setScale(1.25);
+      var bringerOfDeath = this.physics.add.sprite(x, y, "Character_BringerOfDeath").setScale(1.25);
+      var bringerOfDeathAnimationMove = "BringerOfDeathMove";
+      var bringerOfDeathAnimationAttack = "BringerOfDeathAttack";
+      var bringerOfDeathAnimationTakeHit = "BringerOfDeathTakeHit";
+      var bringerOfDeathAnimationDeath = "BringerOfDeathDeath";
+      bringerOfDeath.play(bringerOfDeathAnimationMove, true);
+      this.physics.add.collider(Character_Knight, bringerOfDeath, function () {
+        if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
+          bringerOfDeath.anims.stop();
+          bringerOfDeath.flipX = Character_Knight.x < bringerOfDeath.x;
+          bringerOfDeath.play(bringerOfDeathAnimationTakeHit);
+
+          // Handle bringerOfDeath's logic when taking hit
+          bringerOfDeath.hp -= Character_Knight.attackdamage;
+          bringerOfDeath.once("animationcomplete-" + bringerOfDeathAnimationTakeHit, function () {
+            bringerOfDeath.flipX = Character_Knight.x < bringerOfDeath.x;
+            if (bringerOfDeath.hp > 0) {
+              bringerOfDeath.play(bringerOfDeathAnimationMove, true);
+            } else {
+              bringerOfDeath.anims.stop();
+              bringerOfDeath.play(bringerOfDeathAnimationDeath);
+              bringerOfDeath.once("animationcomplete-" + bringerOfDeathAnimationDeath, function () {
+                bringerOfDeath.destroy();
+              });
+            }
+          });
+        } else if (bringerOfDeath.anims.currentAnim.key !== bringerOfDeathAnimationAttack) {
+          bringerOfDeath.anims.stop();
+
+          // Handle bringerOfDeath's logic when attacking
+          Character_Knight.hp -= bringerOfDeath.attackdamage;
+          bringerOfDeath.flipX = Character_Knight.x < bringerOfDeath.x;
+          bringerOfDeath.play(bringerOfDeathAnimationAttack);
+          bringerOfDeath.once("animationcomplete-" + bringerOfDeathAnimationAttack, function () {
+            bringerOfDeath.flipX = Character_Knight.x < bringerOfDeath.x;
+            bringerOfDeath.play(bringerOfDeathAnimationMove, true);
+          });
+        }
+      });
     }
   }, {
     key: "performEvent2",
     value: function performEvent2() {
-      console.log("Performing Event 2");
+      console.log("Performing Event 1");
       var x = Phaser.Math.Between(0, this.sys.game.config.width);
       var y = Phaser.Math.Between(0, this.sys.game.config.height);
-      this.physics.add.sprite(x, y, "Character_FrostGuardian").setScale(1.25);
+      var frostGuardian = this.physics.add.sprite(x, y, "Character_FrostGuardian").setScale(1.25);
+      var frostGuardianAnimationMove = "FrostGuardianMove";
+      var frostGuardianAnimationAttack = "FrostGuardianAttack";
+      var frostGuardianAnimationTakeHit = "FrostGuardianTakeHit";
+      var frostGuardianAnimationDeath = "FrostGuardianDeath";
+      frostGuardian.play(frostGuardianAnimationMove, true);
+      this.physics.add.collider(Character_Knight, frostGuardian, function () {
+        if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
+          frostGuardian.anims.stop();
+          frostGuardian.flipX = Character_Knight.x < frostGuardian.x;
+          frostGuardian.play(frostGuardianAnimationTakeHit);
+
+          // Handle frostGuardian's logic when taking hit
+          frostGuardian.hp -= Character_Knight.attackdamage;
+          frostGuardian.once("animationcomplete-" + frostGuardianAnimationTakeHit, function () {
+            frostGuardian.flipX = Character_Knight.x < frostGuardian.x;
+            if (frostGuardian.hp > 0) {
+              frostGuardian.play(frostGuardianAnimationMove, true);
+            } else {
+              frostGuardian.anims.stop();
+              frostGuardian.play(frostGuardianAnimationDeath);
+              frostGuardian.once("animationcomplete-" + frostGuardianAnimationDeath, function () {
+                frostGuardian.destroy();
+              });
+            }
+          });
+        } else if (frostGuardian.anims.currentAnim.key !== frostGuardianAnimationAttack) {
+          frostGuardian.anims.stop();
+
+          // Handle frostGuardian's logic when attacking
+          Character_Knight.hp -= frostGuardian.attackdamage;
+          frostGuardian.flipX = Character_Knight.x < frostGuardian.x;
+          frostGuardian.play(frostGuardianAnimationAttack);
+          frostGuardian.once("animationcomplete-" + frostGuardianAnimationAttack, function () {
+            frostGuardian.flipX = Character_Knight.x < frostGuardian.x;
+            frostGuardian.play(frostGuardianAnimationMove, true);
+          });
+        }
+      });
     }
   }, {
     key: "performEvent3",
     value: function performEvent3() {
-      console.log("Performing Event 3");
+      console.log("Performing Event 1");
       var x = Phaser.Math.Between(0, this.sys.game.config.width);
       var y = Phaser.Math.Between(0, this.sys.game.config.height);
-      this.physics.add.sprite(x, y, "Character_DemonSlime").setScale(1.25);
+      var demonSlime = this.physics.add.sprite(x, y, "Character_DemonSlime").setScale(1.25);
+      var demonSlimeAnimationMove = "DemonSlimeMove";
+      var demonSlimeAnimationAttack = "DemonSlimeAttack";
+      var demonSlimeAnimationTakeHit = "DemonSlimeTakeHit";
+      var demonSlimeAnimationDeath = "DemonSlimeDeath";
+      demonSlime.play(demonSlimeAnimationMove, true);
+      this.physics.add.collider(Character_Knight, demonSlime, function () {
+        if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
+          demonSlime.anims.stop();
+          demonSlime.flipX = Character_Knight.x < demonSlime.x;
+          demonSlime.play(demonSlimeAnimationTakeHit);
+
+          // Handle demonSlime's logic when taking hit
+          demonSlime.hp -= Character_Knight.attackdamage;
+          demonSlime.once("animationcomplete-" + demonSlimeAnimationTakeHit, function () {
+            demonSlime.flipX = Character_Knight.x < demonSlime.x;
+            if (demonSlime.hp > 0) {
+              demonSlime.play(demonSlimeAnimationMove, true);
+            } else {
+              demonSlime.anims.stop();
+              demonSlime.play(demonSlimeAnimationDeath);
+              demonSlime.once("animationcomplete-" + demonSlimeAnimationDeath, function () {
+                demonSlime.destroy();
+              });
+            }
+          });
+        } else if (demonSlime.anims.currentAnim.key !== demonSlimeAnimationAttack) {
+          demonSlime.anims.stop();
+
+          // Handle demonSlime's logic when attacking
+          Character_Knight.hp -= demonSlime.attackdamage;
+          demonSlime.flipX = Character_Knight.x < demonSlime.x;
+          demonSlime.play(demonSlimeAnimationAttack);
+          demonSlime.once("animationcomplete-" + demonSlimeAnimationAttack, function () {
+            demonSlime.flipX = Character_Knight.x < demonSlime.x;
+            demonSlime.play(demonSlimeAnimationMove, true);
+          });
+        }
+      });
     }
   }]);
   return PlayScene;
 }(Phaser.Scene);
-},{"../CST.js":"src/CST.js","../EnemySprites.js":"src/EnemySprites.js","../KnightSprites.js":"src/KnightSprites.js"}],"src/Scenes/PKScene.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PKScene = void 0;
-var _CST = require("../CST.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-var PKScene = exports.PKScene = /*#__PURE__*/function (_Phaser$Scene) {
-  _inherits(PKScene, _Phaser$Scene);
-  function PKScene() {
-    _classCallCheck(this, PKScene);
-    return _callSuper(this, PKScene, [{
-      key: _CST.CST.SCENES.PK
-    }]);
-  }
-  _createClass(PKScene, [{
-    key: "preload",
-    value: function preload() {}
-  }, {
-    key: "create",
-    value: function create() {}
-  }]);
-  return PKScene;
-}(Phaser.Scene);
-},{"../CST.js":"src/CST.js"}],"src/Scenes/OptionScene.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.OptionScene = void 0;
-var _CST = require("../CST.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-var OptionScene = exports.OptionScene = /*#__PURE__*/function (_Phaser$Scene) {
-  _inherits(OptionScene, _Phaser$Scene);
-  function OptionScene() {
-    _classCallCheck(this, OptionScene);
-    return _callSuper(this, OptionScene, [{
-      key: _CST.CST.SCENES.OPTION
-    }]);
-  }
-  _createClass(OptionScene, [{
-    key: "preload",
-    value: function preload() {}
-  }, {
-    key: "create",
-    value: function create() {}
-  }]);
-  return OptionScene;
-}(Phaser.Scene);
-},{"../CST.js":"src/CST.js"}],"src/main.js":[function(require,module,exports) {
+},{"../CST.js":"src/CST.js","../EnemySprites.js":"src/EnemySprites.js","../KnightSprites.js":"src/KnightSprites.js"}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
 var _LoadScene = require("./Scenes/LoadScene.js");
 var _MenuScene = require("./Scenes/MenuScene.js");
 var _PlayScene = require("./Scenes/PlayScene.js");
-var _PKScene = require("./Scenes/PKScene.js");
-var _OptionScene = require("./Scenes/OptionScene.js");
 /**Tab for ease coding */
 /** @type {import("../typings/phaser")} */
 
 var game = new Phaser.Game({
   width: 1200,
   height: 675,
-  scene: [_LoadScene.LoadScene, _MenuScene.MenuScene, _PlayScene.PlayScene, _PKScene.PKScene, _OptionScene.OptionScene],
+  scene: [_LoadScene.LoadScene, _MenuScene.MenuScene, _PlayScene.PlayScene],
   render: {
     pixelArt: true
   },
   physics: {
     default: "arcade",
     arcade: {
-      debug: true
+      debug: false
     }
   },
   scale: {
@@ -1230,7 +1474,7 @@ var game = new Phaser.Game({
     autoCenter: Phaser.Scale.CENTER_BOTH
   }
 });
-},{"./Scenes/LoadScene.js":"src/Scenes/LoadScene.js","./Scenes/MenuScene.js":"src/Scenes/MenuScene.js","./Scenes/PlayScene.js":"src/Scenes/PlayScene.js","./Scenes/PKScene.js":"src/Scenes/PKScene.js","./Scenes/OptionScene.js":"src/Scenes/OptionScene.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./Scenes/LoadScene.js":"src/Scenes/LoadScene.js","./Scenes/MenuScene.js":"src/Scenes/MenuScene.js","./Scenes/PlayScene.js":"src/Scenes/PlayScene.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1255,7 +1499,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "22982" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45184" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

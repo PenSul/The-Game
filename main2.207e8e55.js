@@ -117,58 +117,102 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+})({"src/Scenes2/BootState.js":[function(require,module,exports) {
+var Bomberman = Bomberman || {};
+Bomberman.Enemy = function (game_state, name, position, properties) {
+  "use strict";
+
+  Bomberman.Prefab.call(this, game_state, name, position, properties);
+  this.anchor.setTo(0.5);
+  this.walking_speed = +properties.walking_speed;
+  this.walking_distance = +properties.walking_distance;
+  this.direction = +properties.direction;
+  this.axis = properties.axis;
+  this.previous_position = this.axis === "x" ? this.x : this.y;
+  this.animations.add("walking_down", [1, 2, 3], 10, true);
+  this.animations.add("walking_left", [4, 5, 6, 7], 10, true);
+  this.animations.add("walking_right", [4, 5, 6, 7], 10, true);
+  this.animations.add("walking_up", [0, 8, 9], 10, true);
+  this.stopped_frames = [1, 4, 4, 0, 1];
+  this.game_state.game.physics.arcade.enable(this);
+  if (this.axis === "x") {
+    this.body.velocity.x = this.direction * this.walking_speed;
+  } else {
+    this.body.velocity.y = this.direction * this.walking_speed;
   }
-  return bundleURL;
-}
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-    if (matches) {
-      return getBaseURL(matches[0]);
+};
+Bomberman.Enemy.prototype = Object.create(Bomberman.Prefab.prototype);
+Bomberman.Enemy.prototype.constructor = Bomberman.Enemy;
+Bomberman.Enemy.prototype.update = function () {
+  "use strict";
+
+  var new_position;
+  this.game_state.game.physics.arcade.collide(this, this.game_state.layers.collision, this.switch_direction, null, this);
+  this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.bombs, this.switch_direction, null, this);
+  this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.explosions, this.kill, null, this);
+  if (this.body.velocity.x < 0) {
+    // walking left
+    this.scale.setTo(-1, 1);
+    this.animations.play("walking_left");
+  } else if (this.body.velocity.x > 0) {
+    // walking right
+    this.scale.setTo(1, 1);
+    this.animations.play("walking_right");
+  }
+  if (this.body.velocity.y < 0) {
+    // walking up
+    this.animations.play("walking_up");
+  } else if (this.body.velocity.y > 0) {
+    // walking down
+    this.animations.play("walking_down");
+  }
+  if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
+    // stop current animation
+    this.animations.stop();
+    this.frame = this.stopped_frames[this.body.facing];
+  }
+  new_position = this.axis === "x" ? this.x : this.y;
+  if (Math.abs(new_position - this.previous_position) >= this.walking_distance) {
+    this.switch_direction();
+  }
+};
+Bomberman.Enemy.prototype.switch_direction = function () {
+  "use strict";
+
+  if (this.axis === "x") {
+    this.previous_position = this.x;
+    this.body.velocity.x *= -1;
+  } else {
+    this.previous_position = this.y;
+    this.body.velocity.y *= -1;
+  }
+};
+},{}],"src/main2.js":[function(require,module,exports) {
+"use strict";
+
+var _BootState = require("./Scenes2/BootState.js");
+/**Tab for ease coding */
+/** @type {import("../typings/phaser")} */
+
+var game = new Phaser.Game({
+  width: 1200,
+  height: 675,
+  scene: [_BootState.BootState],
+  render: {
+    pixelArt: true
+  },
+  physics: {
+    default: "arcade",
+    arcade: {
+      debug: false
     }
+  },
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
   }
-  return '/';
-}
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-function updateLink(link) {
-  var newLink = link.cloneNode();
-  newLink.onload = function () {
-    link.remove();
-  };
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-var cssTimeout = null;
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-    cssTimeout = null;
-  }, 50);
-}
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+});
+},{"./Scenes2/BootState.js":"src/Scenes2/BootState.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -193,7 +237,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63439" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45184" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -337,5 +381,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/Knight.js.map
+},{}]},{},["../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/main2.js"], null)
+//# sourceMappingURL=/main2.207e8e55.js.map
