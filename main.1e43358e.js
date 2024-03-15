@@ -865,7 +865,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.physics.world.setBounds(0, 0, mappy.widthInPixels, mappy.heightInPixels);
 
       // Character
-      var Character_Knight = new _KnightSprites.KnightSprites(this, 960, 480, "Character_Knight", 10, 0, 1, 100, 15, 5, 150).setSize(25, 45, true).setOffset(40, 35);
+      var Character_Knight = new _KnightSprites.KnightSprites(this, 960, 480, "Character_Knight", 100, 0, 1, 100, 15, 5, 150).setSize(25, 45, true).setOffset(40, 35);
       window.Character_Knight = Character_Knight;
       Character_Knight.body.setCollideWorldBounds(true);
 
@@ -1211,7 +1211,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2696" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52457" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
