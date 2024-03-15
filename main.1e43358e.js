@@ -128,13 +128,13 @@ var CST = exports.CST = {
   SCENES: {
     LOAD: "LOAD",
     MENU: "MENU",
-    PLAY: "PLAY"
+    PLAY: "PLAY",
+    HOWTOPLAY: "HOWTOPLAY"
   },
   IMAGES: {
     LOAD: "Logo.png",
-    OPTION: "OptionButton.png",
     PLAY: "PlayButton.png",
-    PK: "PKModeButton.png",
+    HOWTOPLAY: "HowToPlayButton.png",
     BACKGROUND1: "background_layer_1.png",
     BACKGROUND2: "background_layer_2.png",
     BACKGROUND3: "background_layer_3.png"
@@ -187,13 +187,7 @@ var LoadScene = exports.LoadScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.load.atlas("Characters", "./assets/CharactersSprites/Characters.png", "./assets/CharactersSprites/Characters.json");
       this.load.atlas("Simple_Characters_Enemy", "./assets/CharactersSprites/Simple_Characters_Enemy.png", "./assets/CharactersSprites/Simple_Characters_Enemy.json");
       this.load.atlas("Simple_Characters_Enemy_2", "./assets/CharactersSprites/Simple_Characters_Enemy_2.png", "./assets/CharactersSprites/Simple_Characters_Enemy_2.json");
-      this.load.atlas("Simple_Characters_Boss_1", "./assets/CharactersSprites/Simple_Characters_Boss_1.png", "./assets/CharactersSprites/Simple_Characters_Boss_1.json");
-      this.load.atlas("Simple_Characters_Boss_2", "./assets/CharactersSprites/Simple_Characters_Boss_2.png", "./assets/CharactersSprites/Simple_Characters_Boss_2.json");
-      this.load.atlas("Simple_Characters_Boss_3", "./assets/CharactersSprites/Simple_Characters_Boss_3.png", "./assets/CharactersSprites/Simple_Characters_Boss_3.json");
-      this.load.atlas("BringerOfDeath", "./assets/CharactersSprites/BringerOfDeath.png", "./assets/CharactersSprites/BringerOfDeath.json");
-      this.load.atlas("DemonSlime", "./assets/CharactersSprites/DemonSlime.png", "./assets/CharactersSprites/DemonSlime.json");
       this.load.atlas("FlyingEye", "./assets/CharactersSprites/FlyingEye.png", "./assets/CharactersSprites/FlyingEye.json");
-      this.load.atlas("FrostGuardian", "./assets/CharactersSprites/FrostGuardian.png", "./assets/CharactersSprites/FrostGuardian.json");
       this.load.atlas("Goblin", "./assets/CharactersSprites/Goblin.png", "./assets/CharactersSprites/Goblin.json");
       this.load.atlas("Knight", "./assets/CharactersSprites/Knight.png", "./assets/CharactersSprites/Knight.json");
       this.load.atlas("Mushroom", "./assets/CharactersSprites/Mushroom.png", "./assets/CharactersSprites/Mushroom.json");
@@ -204,9 +198,9 @@ var LoadScene = exports.LoadScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.load.image("background_layer_2", "./assets/oak_woods_v1.0/background/background_layer_2.png");
       this.load.image("background_layer_3", "./assets/oak_woods_v1.0/background/background_layer_3.png");
       this.load.image("Logo", "./assets/Knight_LoadScene/Logo.png");
-      this.load.image("OptionButton", "./assets/Knight_LoadScene/OptionButton.png");
       this.load.image("PlayButton", "./assets/Knight_LoadScene/PlayButton.png");
-      this.load.image("PKModeButton", "./assets/Knight_LoadScene/PKModeButton.png");
+      this.load.image("HowToPlayButton", "./assets/Knight_LoadScene/HowToPlayButton.png");
+      this.load.image("HowToPlay", "./assets/Knight_LoadScene/HowToPlay.png");
       this.load.audio("Knight_LoadScene_BGM", "./assets/Knight_LoadScene/Knight_LoadScene_Music.mp3");
 
       // Loading Bar cuz why not, its more fancy :)
@@ -319,6 +313,8 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.add.image(0, 0, "background_layer_2").setOrigin(0).setScale(3.75).setDepth(0);
       this.add.image(0, 0, "background_layer_3").setOrigin(0).setScale(3.75).setDepth(0);
       var play = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2 - 20, "PlayButton").setDepth(1);
+      var HowToPlayButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2 + 55, "HowToPlayButton").setDepth(1);
+      var HowToPlay = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, "HowToPlay").setVisible(false).setDepth(1).setScale(0.7);
 
       // Sprites
       var hoverSprites = this.add.sprite(100, 100, "_Run");
@@ -374,6 +370,14 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       play.on("pointerup", function () {
         _this.scene.start(_CST.CST.SCENES.PLAY);
       });
+      // HowToPlayButton
+      HowToPlayButton.setInteractive();
+      HowToPlayButton.on("pointerover", function () {
+        HowToPlay.setVisible(true);
+      });
+      HowToPlayButton.on("pointerout", function () {
+        HowToPlay.setVisible(false);
+      });
     }
   }]);
   return MenuScene;
@@ -411,35 +415,38 @@ var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics
     scene.sys.updateList.add(_assertThisInitialized(_this));
     scene.sys.displayList.add(_assertThisInitialized(_this));
     scene.physics.world.enableBody(_assertThisInitialized(_this));
-    _this.setSize(40, 40, true);
 
     // Goblin
     if (texture === 'Character_Goblin') {
       _this.hp = 6;
       _this.speed = 30;
       _this.attackdamage = 1;
-      _this.exp = 1;
+      _this.exp = 2; // 10 for testing, o2
+      _this.setSize(40, 40, true);
     }
     // Skeleton
     if (texture === 'Character_Skeleton') {
       _this.hp = 12;
       _this.speed = 60;
       _this.attackdamage = 2;
-      _this.exp = 2;
+      _this.exp = 4; // 10 for testing, o4
+      _this.setSize(40, 40, true);
     }
     // FlyingEye
     if (texture === 'Character_FlyingEye') {
       _this.hp = 15;
       _this.speed = 50;
       _this.attackdamage = 3;
-      _this.exp = 3;
+      _this.exp = 6; // 10 for testing, o6
+      _this.setSize(40, 40, true);
     }
     // Mushroom
     if (texture === 'Character_Mushroom') {
       _this.hp = 20;
       _this.speed = 40;
       _this.attackdamage = 4;
-      _this.exp = 1;
+      _this.exp = 2; // 10 for testing, o2
+      _this.setSize(40, 40, true);
     }
     return _this;
   }
@@ -467,7 +474,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 var KnightSprites = exports.KnightSprites = /*#__PURE__*/function (_Phaser$Physics$Arcad) {
   _inherits(KnightSprites, _Phaser$Physics$Arcad);
-  function KnightSprites(scene, x, y, texture, hp, exp, level, attackdamage) {
+  function KnightSprites(scene, x, y, texture, hp, exp, level, nextlevelexp, attackdamage, burndamage, burnrange) {
     var _this;
     _classCallCheck(this, KnightSprites);
     _this = _callSuper(this, KnightSprites, [scene, x, y, texture]);
@@ -477,7 +484,10 @@ var KnightSprites = exports.KnightSprites = /*#__PURE__*/function (_Phaser$Physi
     _this.hp = hp;
     _this.exp = exp;
     _this.level = level;
+    _this.nextlevelexp = nextlevelexp;
     _this.attackdamage = attackdamage;
+    _this.burndamage = burndamage;
+    _this.burnrange = burnrange;
     _this.setScale(1.25);
     return _this;
   }
@@ -501,9 +511,9 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
@@ -517,16 +527,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
     _this.stopwatchText = null;
     _this.startTime = 0;
     _this.elapsedTime = 0;
-    _this.gameEvents = [{
-      time: 600,
-      event: _this.performEvent1.bind(_assertThisInitialized(_this))
-    }, {
-      time: 1200,
-      event: _this.performEvent2.bind(_assertThisInitialized(_this))
-    }, {
-      time: 1800,
-      event: _this.performEvent3.bind(_assertThisInitialized(_this))
-    }];
     return _this;
   }
   _createClass(PlayScene, [{
@@ -763,185 +763,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         repeat: -1
       });
 
-      // Bringer Of Death Attack
-      this.anims.create({
-        key: "BringerOfDeathAttack",
-        frameRate: 20,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_BringerOfDeathAttack_00",
-          suffix: ".png",
-          start: 0,
-          end: 9
-        })
-      });
-      // Bringer Of Death Cast
-      this.anims.create({
-        key: "BringerOfDeathCast",
-        frameRate: 18,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_BringerOfDeathCast_00",
-          suffix: ".png",
-          start: 0,
-          end: 8
-        })
-      });
-      // Bringer Of Death Death
-      this.anims.create({
-        key: "BringerOfDeathDeath",
-        frameRate: 20,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_BringerOfDeathDeath_00",
-          suffix: ".png",
-          start: 0,
-          end: 9
-        })
-      });
-      // Bringer Of Death Idle
-      this.anims.create({
-        key: "BringerOfDeathIdle",
-        frameRate: 16,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_BringerOfDeathIdle_00",
-          suffix: ".png",
-          start: 0,
-          end: 7
-        })
-      });
-      // Bringer Of Death Take Hit
-      this.anims.create({
-        key: "BringerOfDeathTakeHit",
-        frameRate: 6,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_BringerOfDeathTakeHit_00",
-          suffix: ".png",
-          start: 0,
-          end: 2
-        })
-      });
-      // Bringer Of Death Walk
-      this.anims.create({
-        key: "BringerOfDeathMove",
-        frameRate: 16,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_BringerOfDeathWalk_00",
-          suffix: ".png",
-          start: 0,
-          end: 7
-        })
-      });
-
-      // Demon Slime Attack
-      this.anims.create({
-        key: "DemonSlimeAttack",
-        frameRate: 30,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_DemonSlimeAttack_00",
-          suffix: ".png",
-          start: 0,
-          end: 14
-        })
-      });
-      // Demon Slime Death
-      this.anims.create({
-        key: "DemonSlimeDeath",
-        frameRate: 44,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_DemonSlimeDeath_00",
-          suffix: ".png",
-          start: 0,
-          end: 21
-        })
-      });
-      // Demon Slime Idle
-      this.anims.create({
-        key: "DemonSlimeIdle",
-        frameRate: 12,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_DemonSlimeIdle_00",
-          suffix: ".png",
-          start: 0,
-          end: 5
-        })
-      });
-      // Demon Slime Take Hit
-      this.anims.create({
-        key: "DemonSlimeTakeHit",
-        frameRate: 10,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_DemonSlimeTakeHit_00",
-          suffix: ".png",
-          start: 0,
-          end: 4
-        })
-      });
-      // Demon Slime Walk
-      this.anims.create({
-        key: "DemonSlimeMove",
-        frameRate: 24,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_DemonSlimeWalk_00",
-          suffix: ".png",
-          start: 0,
-          end: 11
-        })
-      });
-
-      // Frost Guardian Attack
-      this.anims.create({
-        key: "FrostGuardianAttack",
-        frameRate: 28,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_FrostGuardianAttack_00",
-          suffix: ".png",
-          start: 0,
-          end: 13
-        })
-      });
-      // Frost Guardian Death
-      this.anims.create({
-        key: "FrostGuardianDeath",
-        frameRate: 32,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_FrostGuardianDeath_00",
-          suffix: ".png",
-          start: 0,
-          end: 15
-        })
-      });
-      // Frost Guardian Idle
-      this.anims.create({
-        key: "FrostGuardianIdle",
-        frameRate: 12,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_FrostGuardianIdle_00",
-          suffix: ".png",
-          start: 0,
-          end: 5
-        })
-      });
-      // Frost Guardian Take Hit
-      this.anims.create({
-        key: "FrostGuardianTakeHit",
-        frameRate: 14,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_FrostGuardianTakeHit_00",
-          suffix: ".png",
-          start: 0,
-          end: 6
-        })
-      });
-      // Frost Guardian Walk
-      this.anims.create({
-        key: "FrostGuardianMove",
-        frameRate: 20,
-        frames: this.anims.generateFrameNames("Characters", {
-          prefix: "_FrostGuardianWalk_00",
-          suffix: ".png",
-          start: 0,
-          end: 9
-        })
-      });
-
       // Burn Effect
       this.anims.create({
         key: "BurnEffect",
@@ -1034,24 +855,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         atlas: "Simple_Characters_Enemy_2",
         frame: "Skeleton.png"
       });
-      this.textures.addSpriteSheetFromAtlas("Character_BringerOfDeath", {
-        frameWidth: 140,
-        frameHeight: 93,
-        atlas: "Simple_Characters_Boss_1",
-        frame: "BringerOfDeath.png"
-      });
-      this.textures.addSpriteSheetFromAtlas("Character_DemonSlime", {
-        frameWidth: 288,
-        frameHeight: 160,
-        atlas: "Simple_Characters_Boss_2",
-        frame: "DemonSlime.png"
-      });
-      this.textures.addSpriteSheetFromAtlas("Character_FrostGuardian", {
-        frameWidth: 192,
-        frameHeight: 128,
-        atlas: "Simple_Characters_Boss_3",
-        frame: "FrostGuardian.png"
-      });
 
       // Load Map
       var mappy = this.add.tilemap("mappy");
@@ -1061,8 +864,18 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       var toplayer = mappy.createLayer("Top", [terrain], 0, 0);
 
       // Character
-      var Character_Knight = new _KnightSprites.KnightSprites(this, 960, 480, "Character_Knight", 200, 0, 1, 15, 100).setSize(25, 45, true).setOffset(40, 35);
+      var Character_Knight = new _KnightSprites.KnightSprites(this, 960, 480, "Character_Knight", 200, 0, 1, 100, 15, 5, 150).setSize(25, 45, true).setOffset(40, 35);
       window.Character_Knight = Character_Knight;
+
+      // Create shadow for the knight
+      var shadow = this.add.graphics();
+      shadow.fillStyle(0x000000, 0.5);
+      shadow.fillEllipse(Character_Knight.x - 7, Character_Knight.y + 48, 15, 10);
+      this.events.on("update", function () {
+        shadow.clear();
+        shadow.fillStyle(0x000000, 0.5);
+        shadow.fillEllipse(Character_Knight.x - 7, Character_Knight.y + 48, 15, 10);
+      });
 
       // Map physics
       this.physics.add.collider(Character_Knight, toplayer);
@@ -1074,20 +887,10 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
 
       // Effect
       this.fireattack = this.physics.add.group();
+      this.collidedEnemies = [];
 
       // Keyboard Input
       this.keyboard = this.input.keyboard.addKeys("W, A, S, D, J");
-
-      // Mouse Input
-      this.input.on('pointermove', function (pointer) {
-        if (pointer.isDown) {
-          var fire = this.physics.add.sprite(pointer.x + 370, pointer.y + 120, "BurnEffect").play("BurnEffect").setOffset(55, 55);
-          this.fireattack.add(fire);
-          fire.once('animationcomplete', function () {
-            fire.destroy();
-          });
-        }
-      }, this);
 
       // Stopwatch Text
       this.stopwatchText = this.add.text(this.cameras.main.width / 2, 10, "00:00:00", {
@@ -1120,7 +923,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       // Start the stopwatch
       this.startStopwatch();
 
-      // Spawn enemies and their animation(This part take me a long time...)
+      // Enemies
       var spawnrate = 1000;
       this.enemies = this.physics.add.group();
       setInterval(function () {
@@ -1128,84 +931,130 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         var y = Phaser.Math.Between(0, 960);
         var distance = Phaser.Math.Distance.Between(Character_Knight.x, Character_Knight.y, x, y);
         if (distance > 300) {
-          var enemy = Phaser.Math.Between(1, 4);
-          var enemySprite;
-          var enemyAnimationMove;
-          var enemyAnimationAttack;
-          var enemyAnimationTakeHit;
-          var enemyAnimationDeath;
-          switch (enemy) {
-            case 1:
-              enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, "Character_Goblin", _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
-              enemyAnimationMove = "GoblinMove";
-              enemyAnimationAttack = "GoblinAttack";
-              enemyAnimationTakeHit = "GoblinTakeHit";
-              enemyAnimationDeath = "GoblinDeath";
-              break;
-            case 2:
-              enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, "Character_Skeleton", _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
-              enemyAnimationMove = "SkeletonMove";
-              enemyAnimationAttack = "SkeletonAttack";
-              enemyAnimationTakeHit = "SkeletonTakeHit";
-              enemyAnimationDeath = "SkeletonDeath";
-              break;
-            case 3:
-              enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, "Character_FlyingEye", _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
-              enemyAnimationMove = "FlyingEyeMove";
-              enemyAnimationAttack = "FlyingEyeAttack";
-              enemyAnimationTakeHit = "FlyingEyeTakeHit";
-              enemyAnimationDeath = "FlyingEyeDeath";
-              break;
-            case 4:
-              enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, "Character_Mushroom", _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
-              enemyAnimationMove = "MushroomMove";
-              enemyAnimationAttack = "MushroomAttack";
-              enemyAnimationTakeHit = "MushroomTakeHit";
-              enemyAnimationDeath = "MushroomDeath";
-              break;
-          }
+          var enemyTypes = [{
+            name: "Character_Goblin",
+            moveAnimation: "GoblinMove",
+            attackAnimation: "GoblinAttack",
+            hitAnimation: "GoblinTakeHit",
+            deathAnimation: "GoblinDeath"
+          }, {
+            name: "Character_Skeleton",
+            moveAnimation: "SkeletonMove",
+            attackAnimation: "SkeletonAttack",
+            hitAnimation: "SkeletonTakeHit",
+            deathAnimation: "SkeletonDeath"
+          }, {
+            name: "Character_FlyingEye",
+            moveAnimation: "FlyingEyeMove",
+            attackAnimation: "FlyingEyeAttack",
+            hitAnimation: "FlyingEyeTakeHit",
+            deathAnimation: "FlyingEyeDeath"
+          }, {
+            name: "Character_Mushroom",
+            moveAnimation: "MushroomMove",
+            attackAnimation: "MushroomAttack",
+            hitAnimation: "MushroomTakeHit",
+            deathAnimation: "MushroomDeath"
+          }];
+          var enemy = Phaser.Math.Between(0, enemyTypes.length - 1);
+          var enemyType = enemyTypes[enemy];
+          var enemySprite = new _EnemySprites.EnemySprites(_this2, x, y, enemyType.name, _this2.hp, _this2.attackdamage, _this2.speed, _this2.exp);
           _this2.enemies.add(enemySprite);
           enemySprite.flipX = Character_Knight.x < enemySprite.x;
-          enemySprite.play(enemyAnimationMove, true);
-          _this2.physics.add.collider(_this2.fireattack, enemySprite, function () {
-            enemySprite.destroy();
-            Character_Knight.exp += enemySprite.exp;
-            if (Character_Knight.exp >= 100) {
-              Character_Knight.level += 1;
-              Character_Knight.exp -= 100;
+          enemySprite.play(enemyType.moveAnimation, true);
+          _this2.physics.add.collider(_this2.fireattack, enemySprite, function (fire, enemySprite) {
+            if (!fire.collidedEnemies) {
+              fire.collidedEnemies = [];
+            }
+            if (!enemySprite.isCollided) {
+              enemySprite.isCollided = true;
+              enemySprite.attackExp = enemySprite.exp;
+              fire.collidedEnemies.push(enemySprite);
+            }
+            if (fire.collidedEnemies.length === enemySprite.length) {
+              fire.collidedEnemies.forEach(function (enemy) {
+                enemy.destroy();
+                Character_Knight.exp += enemy.attackExp;
+              });
+              checkKnightLevelUp();
+              fire.destroy();
             }
           });
           _this2.physics.add.collider(Character_Knight, enemySprite, function () {
             if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
               enemySprite.anims.stop();
               enemySprite.flipX = Character_Knight.x < enemySprite.x;
-              enemySprite.play(enemyAnimationTakeHit);
+              enemySprite.play(enemyType.hitAnimation);
               enemySprite.hp -= Character_Knight.attackdamage;
-              enemySprite.once("animationcomplete-" + enemyAnimationTakeHit, function () {
+              enemySprite.once("animationcomplete-" + enemyType.hitAnimation, function () {
                 enemySprite.flipX = Character_Knight.x < enemySprite.x;
                 if (enemySprite.hp > 0) {
-                  enemySprite.play(enemyAnimationMove, true);
+                  enemySprite.play(enemyType.moveAnimation, true);
                 } else {
                   enemySprite.anims.stop();
-                  enemySprite.play(enemyAnimationDeath);
-                  enemySprite.once("animationcomplete-" + enemyAnimationDeath, function () {
+                  enemySprite.play(enemyType.deathAnimation);
+                  Character_Knight.exp += enemySprite.exp;
+                  checkKnightLevelUp();
+                  enemySprite.once("animationcomplete-" + enemyType.deathAnimation, function () {
                     enemySprite.destroy();
                   });
                 }
               });
-            } else if (enemySprite.anims.currentAnim.key !== enemyAnimationAttack) {
-              enemySprite.anims.stop();
-              enemySprite.flipX = Character_Knight.x < enemySprite.x;
-              enemySprite.play(enemyAnimationAttack);
-              Character_Knight.hp -= enemySprite.attackdamage;
-              enemySprite.once("animationcomplete-" + enemyAnimationAttack, function () {
+            } else if (enemySprite.anims.currentAnim.key !== enemyType.attackAnimation) {
+              if (!enemySprite.isAttacking) {
+                enemySprite.anims.stop();
                 enemySprite.flipX = Character_Knight.x < enemySprite.x;
-                enemySprite.play(enemyAnimationMove, true);
-              });
+                enemySprite.play(enemyType.attackAnimation);
+                Character_Knight.hp -= enemySprite.attackdamage;
+                enemySprite.isAttacking = true;
+                enemySprite.once("animationcomplete-" + enemyType.attackAnimation, function () {
+                  enemySprite.flipX = Character_Knight.x < enemySprite.x;
+                  enemySprite.play(enemyType.moveAnimation, true);
+                  setTimeout(function () {
+                    enemySprite.isAttacking = false;
+                  }, 1500);
+                });
+              }
             }
           });
         }
       }, spawnrate);
+      function checkKnightLevelUp() {
+        if (Character_Knight.exp >= Character_Knight.nextlevelexp) {
+          Character_Knight.level++;
+          Character_Knight.exp -= Character_Knight.nextlevelexp;
+          Character_Knight.burnrange += 5;
+          Character_Knight.burndamage += 0.5;
+          Character_Knight.nextlevelexp = Math.floor(Character_Knight.nextlevelexp * 1.5);
+        }
+      }
+
+      // Auto burn effect
+      setInterval(function () {
+        var enemiesInRange = _this2.enemies.getChildren().filter(function (enemy) {
+          var distance = Phaser.Math.Distance.Between(Character_Knight.x, Character_Knight.y, enemy.x, enemy.y);
+          return distance <= Character_Knight.burnrange;
+        });
+        if (enemiesInRange.length > 0) {
+          var randomEnemy = Phaser.Utils.Array.GetRandom(enemiesInRange);
+          var fire = _this2.physics.add.sprite(randomEnemy.x, randomEnemy.y, "BurnEffect").play("BurnEffect").setOffset(55, 55);
+          _this2.fireattack.add(fire);
+          fire.once('animationcomplete', function () {
+            fire.destroy();
+          });
+          randomEnemy.hp -= Character_Knight.burndamage;
+          if (randomEnemy.hp <= 0) {
+            Character_Knight.exp += randomEnemy.exp;
+            randomEnemy.destroy();
+          }
+        }
+        checkKnightLevelUp();
+      }, 500);
+      this.collidedEnemies.forEach(function (enemySprite) {
+        Character_Knight.exp += enemySprite.exp;
+        checkKnightLevelUp();
+      });
+      this.collidedEnemies = [];
     }
   }, {
     key: "update",
@@ -1233,6 +1082,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.A.isDown) {
         Character_Knight.setFlipX(true);
+        Character_Knight.setOffset(52, 35);
         Character_Knight.setVelocityX(-100);
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.S.isDown) {
@@ -1240,6 +1090,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.D.isDown) {
         Character_Knight.setFlipX(false);
+        Character_Knight.setOffset(42, 35);
         Character_Knight.setVelocityX(100);
         Character_Knight.anims.play("KnightRun", true);
       } else if (this.keyboard.J.isDown) {
@@ -1262,14 +1113,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       var seconds = elapsedSeconds % 60;
       var formattedTime = "Time: ".concat(this.padZero(hours), ":").concat(this.padZero(minutes), ":").concat(this.padZero(seconds));
       this.stopwatchText.setText(formattedTime);
-
-      // Perform game events based on the elapsed time
-      this.gameEvents.forEach(function (event) {
-        if (elapsedSeconds >= event.time && !event.triggered) {
-          event.event();
-          event.triggered = true;
-        }
-      });
       this.elapsedTime = this.getTimeElapsed();
 
       // Hp and Level
@@ -1306,144 +1149,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
     value: function padZero(number) {
       return number.toString().padStart(2, "0");
     }
-  }, {
-    key: "performEvent1",
-    value: function performEvent1() {
-      console.log("Performing Event 1");
-      var x = Phaser.Math.Between(0, this.sys.game.config.width);
-      var y = Phaser.Math.Between(0, this.sys.game.config.height);
-      var bringerOfDeath = this.physics.add.sprite(x, y, "Character_BringerOfDeath").setScale(1.25);
-      var bringerOfDeathAnimationMove = "BringerOfDeathMove";
-      var bringerOfDeathAnimationAttack = "BringerOfDeathAttack";
-      var bringerOfDeathAnimationTakeHit = "BringerOfDeathTakeHit";
-      var bringerOfDeathAnimationDeath = "BringerOfDeathDeath";
-      bringerOfDeath.play(bringerOfDeathAnimationMove, true);
-      this.physics.add.collider(Character_Knight, bringerOfDeath, function () {
-        if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
-          bringerOfDeath.anims.stop();
-          bringerOfDeath.flipX = Character_Knight.x < bringerOfDeath.x;
-          bringerOfDeath.play(bringerOfDeathAnimationTakeHit);
-
-          // Handle bringerOfDeath's logic when taking hit
-          bringerOfDeath.hp -= Character_Knight.attackdamage;
-          bringerOfDeath.once("animationcomplete-" + bringerOfDeathAnimationTakeHit, function () {
-            bringerOfDeath.flipX = Character_Knight.x < bringerOfDeath.x;
-            if (bringerOfDeath.hp > 0) {
-              bringerOfDeath.play(bringerOfDeathAnimationMove, true);
-            } else {
-              bringerOfDeath.anims.stop();
-              bringerOfDeath.play(bringerOfDeathAnimationDeath);
-              bringerOfDeath.once("animationcomplete-" + bringerOfDeathAnimationDeath, function () {
-                bringerOfDeath.destroy();
-              });
-            }
-          });
-        } else if (bringerOfDeath.anims.currentAnim.key !== bringerOfDeathAnimationAttack) {
-          bringerOfDeath.anims.stop();
-
-          // Handle bringerOfDeath's logic when attacking
-          Character_Knight.hp -= bringerOfDeath.attackdamage;
-          bringerOfDeath.flipX = Character_Knight.x < bringerOfDeath.x;
-          bringerOfDeath.play(bringerOfDeathAnimationAttack);
-          bringerOfDeath.once("animationcomplete-" + bringerOfDeathAnimationAttack, function () {
-            bringerOfDeath.flipX = Character_Knight.x < bringerOfDeath.x;
-            bringerOfDeath.play(bringerOfDeathAnimationMove, true);
-          });
-        }
-      });
-    }
-  }, {
-    key: "performEvent2",
-    value: function performEvent2() {
-      console.log("Performing Event 1");
-      var x = Phaser.Math.Between(0, this.sys.game.config.width);
-      var y = Phaser.Math.Between(0, this.sys.game.config.height);
-      var frostGuardian = this.physics.add.sprite(x, y, "Character_FrostGuardian").setScale(1.25);
-      var frostGuardianAnimationMove = "FrostGuardianMove";
-      var frostGuardianAnimationAttack = "FrostGuardianAttack";
-      var frostGuardianAnimationTakeHit = "FrostGuardianTakeHit";
-      var frostGuardianAnimationDeath = "FrostGuardianDeath";
-      frostGuardian.play(frostGuardianAnimationMove, true);
-      this.physics.add.collider(Character_Knight, frostGuardian, function () {
-        if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
-          frostGuardian.anims.stop();
-          frostGuardian.flipX = Character_Knight.x < frostGuardian.x;
-          frostGuardian.play(frostGuardianAnimationTakeHit);
-
-          // Handle frostGuardian's logic when taking hit
-          frostGuardian.hp -= Character_Knight.attackdamage;
-          frostGuardian.once("animationcomplete-" + frostGuardianAnimationTakeHit, function () {
-            frostGuardian.flipX = Character_Knight.x < frostGuardian.x;
-            if (frostGuardian.hp > 0) {
-              frostGuardian.play(frostGuardianAnimationMove, true);
-            } else {
-              frostGuardian.anims.stop();
-              frostGuardian.play(frostGuardianAnimationDeath);
-              frostGuardian.once("animationcomplete-" + frostGuardianAnimationDeath, function () {
-                frostGuardian.destroy();
-              });
-            }
-          });
-        } else if (frostGuardian.anims.currentAnim.key !== frostGuardianAnimationAttack) {
-          frostGuardian.anims.stop();
-
-          // Handle frostGuardian's logic when attacking
-          Character_Knight.hp -= frostGuardian.attackdamage;
-          frostGuardian.flipX = Character_Knight.x < frostGuardian.x;
-          frostGuardian.play(frostGuardianAnimationAttack);
-          frostGuardian.once("animationcomplete-" + frostGuardianAnimationAttack, function () {
-            frostGuardian.flipX = Character_Knight.x < frostGuardian.x;
-            frostGuardian.play(frostGuardianAnimationMove, true);
-          });
-        }
-      });
-    }
-  }, {
-    key: "performEvent3",
-    value: function performEvent3() {
-      console.log("Performing Event 1");
-      var x = Phaser.Math.Between(0, this.sys.game.config.width);
-      var y = Phaser.Math.Between(0, this.sys.game.config.height);
-      var demonSlime = this.physics.add.sprite(x, y, "Character_DemonSlime").setScale(1.25);
-      var demonSlimeAnimationMove = "DemonSlimeMove";
-      var demonSlimeAnimationAttack = "DemonSlimeAttack";
-      var demonSlimeAnimationTakeHit = "DemonSlimeTakeHit";
-      var demonSlimeAnimationDeath = "DemonSlimeDeath";
-      demonSlime.play(demonSlimeAnimationMove, true);
-      this.physics.add.collider(Character_Knight, demonSlime, function () {
-        if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
-          demonSlime.anims.stop();
-          demonSlime.flipX = Character_Knight.x < demonSlime.x;
-          demonSlime.play(demonSlimeAnimationTakeHit);
-
-          // Handle demonSlime's logic when taking hit
-          demonSlime.hp -= Character_Knight.attackdamage;
-          demonSlime.once("animationcomplete-" + demonSlimeAnimationTakeHit, function () {
-            demonSlime.flipX = Character_Knight.x < demonSlime.x;
-            if (demonSlime.hp > 0) {
-              demonSlime.play(demonSlimeAnimationMove, true);
-            } else {
-              demonSlime.anims.stop();
-              demonSlime.play(demonSlimeAnimationDeath);
-              demonSlime.once("animationcomplete-" + demonSlimeAnimationDeath, function () {
-                demonSlime.destroy();
-              });
-            }
-          });
-        } else if (demonSlime.anims.currentAnim.key !== demonSlimeAnimationAttack) {
-          demonSlime.anims.stop();
-
-          // Handle demonSlime's logic when attacking
-          Character_Knight.hp -= demonSlime.attackdamage;
-          demonSlime.flipX = Character_Knight.x < demonSlime.x;
-          demonSlime.play(demonSlimeAnimationAttack);
-          demonSlime.once("animationcomplete-" + demonSlimeAnimationAttack, function () {
-            demonSlime.flipX = Character_Knight.x < demonSlime.x;
-            demonSlime.play(demonSlimeAnimationMove, true);
-          });
-        }
-      });
-    }
   }]);
   return PlayScene;
 }(Phaser.Scene);
@@ -1466,7 +1171,7 @@ var game = new Phaser.Game({
   physics: {
     default: "arcade",
     arcade: {
-      debug: false
+      debug: true
     }
   },
   scale: {
@@ -1499,7 +1204,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "47821" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61417" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
