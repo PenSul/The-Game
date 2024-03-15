@@ -862,10 +862,12 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       var bottomlayer = mappy.createLayer("Bottom", [terrain], 0, 0);
       var middlelayer = mappy.createLayer("Middle", [terrain], 0, 0);
       var toplayer = mappy.createLayer("Top", [terrain], 0, 0);
+      this.physics.world.setBounds(0, 0, mappy.widthInPixels, mappy.heightInPixels);
 
       // Character
-      var Character_Knight = new _KnightSprites.KnightSprites(this, 960, 480, "Character_Knight", 200, 0, 1, 100, 15, 5, 150).setSize(25, 45, true).setOffset(40, 35);
+      var Character_Knight = new _KnightSprites.KnightSprites(this, 960, 480, "Character_Knight", 10, 0, 1, 100, 15, 5, 150).setSize(25, 45, true).setOffset(40, 35);
       window.Character_Knight = Character_Knight;
+      Character_Knight.body.setCollideWorldBounds(true);
 
       // Create shadow for the knight
       var shadow = this.add.graphics();
@@ -883,7 +885,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         collides: true
       });
       this.cameras.main.startFollow(Character_Knight);
-      this.physics.world.setBounds(0, 0, mappy.widthInPixels, mappy.heightInPixels);
 
       // Effect
       this.fireattack = this.physics.add.group();
@@ -925,8 +926,13 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
 
       // Enemies
       var spawnrate = 1000;
+      var spawnInterval;
       this.enemies = this.physics.add.group();
       setInterval(function () {
+        if (Character_Knight.hp <= 0) {
+          clearInterval(spawnInterval);
+          return;
+        }
         var x = Phaser.Math.Between(0, 1920);
         var y = Phaser.Math.Between(0, 960);
         var distance = Phaser.Math.Distance.Between(Character_Knight.x, Character_Knight.y, x, y);
@@ -1128,6 +1134,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           enemy.body.setVelocity(0);
           enemy.anims.isPlaying = false;
         });
+        this.stopwatchText.setText("You have been defeated!");
         var playagainbutton = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "PlayAgain").setInteractive().setScale(2).setScrollFactor(0).setDepth(1000);
         playagainbutton.on("pointerdown", function () {
           window.location.reload();
@@ -1204,7 +1211,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61417" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2696" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
