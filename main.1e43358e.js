@@ -382,77 +382,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
   }]);
   return MenuScene;
 }(Phaser.Scene);
-},{"../CST.js":"src/CST.js"}],"src/EnemySprites.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.EnemySprites = void 0;
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics$Arcad) {
-  _inherits(EnemySprites, _Phaser$Physics$Arcad);
-  function EnemySprites(scene, x, y, texture, hp, attackdamage, speed, exp) {
-    var _this;
-    _classCallCheck(this, EnemySprites);
-    _this = _callSuper(this, EnemySprites, [scene, x, y, texture]);
-    _this.hp = hp;
-    _this.attackdamage = attackdamage;
-    _this.speed = speed;
-    _this.exp = exp;
-    scene.sys.updateList.add(_assertThisInitialized(_this));
-    scene.sys.displayList.add(_assertThisInitialized(_this));
-    scene.physics.world.enableBody(_assertThisInitialized(_this));
-
-    // Goblin
-    if (texture === 'Character_Goblin') {
-      _this.hp = 6;
-      _this.speed = 30;
-      _this.attackdamage = 1;
-      _this.exp = 2; // 10 for testing, o2
-      _this.setSize(40, 40, true);
-    }
-    // Skeleton
-    if (texture === 'Character_Skeleton') {
-      _this.hp = 12;
-      _this.speed = 60;
-      _this.attackdamage = 2;
-      _this.exp = 4; // 10 for testing, o4
-      _this.setSize(40, 40, true);
-    }
-    // FlyingEye
-    if (texture === 'Character_FlyingEye') {
-      _this.hp = 15;
-      _this.speed = 50;
-      _this.attackdamage = 3;
-      _this.exp = 6; // 10 for testing, o6
-      _this.setSize(40, 40, true);
-    }
-    // Mushroom
-    if (texture === 'Character_Mushroom') {
-      _this.hp = 20;
-      _this.speed = 40;
-      _this.attackdamage = 4;
-      _this.exp = 2; // 10 for testing, o2
-      _this.setSize(40, 40, true);
-    }
-    return _this;
-  }
-  return _createClass(EnemySprites);
-}(Phaser.Physics.Arcade.Sprite);
-},{}],"src/KnightSprites.js":[function(require,module,exports) {
+},{"../CST.js":"src/CST.js"}],"src/KnightSprites.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -493,6 +423,76 @@ var KnightSprites = exports.KnightSprites = /*#__PURE__*/function (_Phaser$Physi
   }
   return _createClass(KnightSprites);
 }(Phaser.Physics.Arcade.Sprite);
+},{}],"src/EnemySprites.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EnemySprites = void 0;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics$Arcad) {
+  _inherits(EnemySprites, _Phaser$Physics$Arcad);
+  function EnemySprites(scene, x, y, texture, hp, attackdamage, speed, exp) {
+    var _this;
+    _classCallCheck(this, EnemySprites);
+    _this = _callSuper(this, EnemySprites, [scene, x, y, texture]);
+    _this.hp = hp;
+    _this.attackdamage = attackdamage;
+    _this.speed = speed;
+    _this.exp = exp;
+    scene.sys.updateList.add(_assertThisInitialized(_this));
+    scene.sys.displayList.add(_assertThisInitialized(_this));
+    scene.physics.world.enableBody(_assertThisInitialized(_this));
+
+    // Goblin
+    if (texture === 'Character_Goblin') {
+      _this.hp = 6;
+      _this.speed = 30;
+      _this.attackdamage = 1;
+      _this.exp = 10; // 10 for testing, o5
+      _this.setSize(40, 40, true);
+    }
+    // Skeleton
+    if (texture === 'Character_Skeleton') {
+      _this.hp = 12;
+      _this.speed = 60;
+      _this.attackdamage = 2;
+      _this.exp = 10; // 10 for testing, o5
+      _this.setSize(40, 40, true);
+    }
+    // FlyingEye
+    if (texture === 'Character_FlyingEye') {
+      _this.hp = 15;
+      _this.speed = 50;
+      _this.attackdamage = 3;
+      _this.exp = 10; // 10 for testing, o5
+      _this.setSize(40, 40, true);
+    }
+    // Mushroom
+    if (texture === 'Character_Mushroom') {
+      _this.hp = 20;
+      _this.speed = 40;
+      _this.attackdamage = 4;
+      _this.exp = 10; // 10 for testing, o5
+      _this.setSize(40, 40, true);
+    }
+    return _this;
+  }
+  return _createClass(EnemySprites);
+}(Phaser.Physics.Arcade.Sprite);
 },{}],"src/Scenes/PlayScene.js":[function(require,module,exports) {
 "use strict";
 
@@ -501,8 +501,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PlayScene = void 0;
 var _CST = require("../CST.js");
-var _EnemySprites = require("../EnemySprites.js");
 var _KnightSprites = require("../KnightSprites.js");
+var _EnemySprites = require("../EnemySprites.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
@@ -763,6 +763,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         repeat: -1
       });
 
+      // Effect
       // Burn Effect
       this.anims.create({
         key: "BurnEffect",
@@ -773,7 +774,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           end: 9
         })
       });
-
       // BurstOfIce Effect
       this.anims.create({
         key: "BurstOfIceEffect",
@@ -784,29 +784,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           end: 6
         })
       });
-
-      // Crystal Effect
-      this.anims.create({
-        key: "CrystalEffect",
-        frameRate: 12,
-        frames: this.anims.generateFrameNames("Effects", {
-          prefix: "_crystal_00",
-          start: 0,
-          end: 5
-        })
-      });
-
-      // CrystalProjectil Effect
-      this.anims.create({
-        key: "CrystalProjectileEffect",
-        frameRate: 14,
-        frames: this.anims.generateFrameNames("Effects", {
-          prefix: "_crystalprojectil_00",
-          start: 0,
-          end: 6
-        })
-      });
-
       // Thunder Effect
       this.anims.create({
         key: "ThunderEffect",
@@ -820,6 +797,9 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.load.tilemapTiledJSON("mappy", "./assets/maps/mappy.json");
       this.load.image("terrain", "./assets/Knight_LoadScene/ashlands_tileset.png");
       this.load.image("PlayAgain", "./assets/Knight_LoadScene/PlayAgainButton.png");
+      this.load.image("damagecard", "./assets/Knight_LoadScene/damage.png");
+      this.load.image("healthcard", "./assets/Knight_LoadScene/health.png");
+      this.load.image("abilitycard", "./assets/Knight_LoadScene/ability.png");
     }
   }, {
     key: "create",
@@ -925,7 +905,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.startStopwatch();
 
       // Enemies
-      var spawnrate = 1000;
+      var spawnrate = 1200;
       var spawnInterval;
       this.enemies = this.physics.add.group();
       setInterval(function () {
@@ -988,7 +968,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           });
           _this2.physics.add.collider(Character_Knight, enemySprite, function () {
             if (Character_Knight.anims.currentAnim.key === "KnightAttack") {
-              enemySprite.anims.stop();
               enemySprite.flipX = Character_Knight.x < enemySprite.x;
               enemySprite.play(enemyType.hitAnimation);
               enemySprite.hp -= Character_Knight.attackdamage;
@@ -1008,7 +987,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
               });
             } else if (enemySprite.anims.currentAnim.key !== enemyType.attackAnimation) {
               if (!enemySprite.isAttacking) {
-                enemySprite.anims.stop();
                 enemySprite.flipX = Character_Knight.x < enemySprite.x;
                 enemySprite.play(enemyType.attackAnimation);
                 Character_Knight.hp -= enemySprite.attackdamage;
@@ -1031,7 +1009,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           Character_Knight.exp -= Character_Knight.nextlevelexp;
           Character_Knight.burnrange += 5;
           Character_Knight.burndamage += 0.5;
-          Character_Knight.nextlevelexp = Math.floor(Character_Knight.nextlevelexp * 1.5);
+          Character_Knight.nextlevelexp += 150;
         }
       }
 
@@ -1159,7 +1137,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
   }]);
   return PlayScene;
 }(Phaser.Scene);
-},{"../CST.js":"src/CST.js","../EnemySprites.js":"src/EnemySprites.js","../KnightSprites.js":"src/KnightSprites.js"}],"src/main.js":[function(require,module,exports) {
+},{"../CST.js":"src/CST.js","../KnightSprites.js":"src/KnightSprites.js","../EnemySprites.js":"src/EnemySprites.js"}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
 var _LoadScene = require("./Scenes/LoadScene.js");
@@ -1211,7 +1189,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52457" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53626" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
