@@ -305,8 +305,8 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
     key: "create",
     value: function create() {
       var _this = this;
-      //Create all kind of shit here like images and sprites here, and make interactive button.
-      //All kind of shit 
+      // Create all kind of shit here like images and sprites here, and make interactive button.
+      // All kind of shit 
       // Images 
       this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, "Logo").setDepth(1).setScale(2);
       this.add.image(0, 0, "background_layer_1").setOrigin(0).setScale(3.75).setDepth(0);
@@ -462,7 +462,7 @@ var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics
       _this.hp = 6;
       _this.speed = 30;
       _this.attackdamage = 1;
-      _this.exp = 10; // 10 for testing, o5
+      _this.exp = 20; // 20 for testing, o5
       _this.setSize(40, 40, true);
     }
     // Skeleton
@@ -470,7 +470,7 @@ var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics
       _this.hp = 12;
       _this.speed = 60;
       _this.attackdamage = 2;
-      _this.exp = 10; // 10 for testing, o5
+      _this.exp = 20; // 20 for testing, o5
       _this.setSize(40, 40, true);
     }
     // FlyingEye
@@ -478,7 +478,7 @@ var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics
       _this.hp = 15;
       _this.speed = 50;
       _this.attackdamage = 3;
-      _this.exp = 10; // 10 for testing, o5
+      _this.exp = 20; // 20 for testing, o5
       _this.setSize(40, 40, true);
     }
     // Mushroom
@@ -486,12 +486,46 @@ var EnemySprites = exports.EnemySprites = /*#__PURE__*/function (_Phaser$Physics
       _this.hp = 20;
       _this.speed = 40;
       _this.attackdamage = 4;
-      _this.exp = 10; // 10 for testing, o5
+      _this.exp = 20; // 20 for testing, o5
       _this.setSize(40, 40, true);
     }
     return _this;
   }
   return _createClass(EnemySprites);
+}(Phaser.Physics.Arcade.Sprite);
+},{}],"src/CardSprites.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CardSprites = void 0;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var CardSprites = exports.CardSprites = /*#__PURE__*/function (_Phaser$Physics$Arcad) {
+  _inherits(CardSprites, _Phaser$Physics$Arcad);
+  function CardSprites(scene, x, y, texture) {
+    var _this;
+    _classCallCheck(this, CardSprites);
+    _this = _callSuper(this, CardSprites, [scene, x, y, texture]);
+    scene.sys.updateList.add(_assertThisInitialized(_this));
+    scene.sys.displayList.add(_assertThisInitialized(_this));
+    _this.setDepth(1001);
+    _this.setScrollFactor(0);
+    return _this;
+  }
+  return _createClass(CardSprites);
 }(Phaser.Physics.Arcade.Sprite);
 },{}],"src/Scenes/PlayScene.js":[function(require,module,exports) {
 "use strict";
@@ -503,6 +537,7 @@ exports.PlayScene = void 0;
 var _CST = require("../CST.js");
 var _KnightSprites = require("../KnightSprites.js");
 var _EnemySprites = require("../EnemySprites.js");
+var _CardSprites = require("../CardSprites.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
@@ -852,11 +887,11 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       // Create shadow for the knight
       var shadow = this.add.graphics();
       shadow.fillStyle(0x000000, 0.5);
-      shadow.fillEllipse(Character_Knight.x - 7, Character_Knight.y + 48, 15, 10);
+      shadow.fillEllipse(Character_Knight.x, Character_Knight.y + 48, 15, 10);
       this.events.on("update", function () {
         shadow.clear();
         shadow.fillStyle(0x000000, 0.5);
-        shadow.fillEllipse(Character_Knight.x - 7, Character_Knight.y + 48, 15, 10);
+        shadow.fillEllipse(Character_Knight.x, Character_Knight.y + 48, 15, 10);
       });
 
       // Map physics
@@ -1003,10 +1038,11 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
           });
         }
       }, spawnrate);
+
+      // Level up Mechanic
       function checkKnightLevelUp() {
         if (Character_Knight.exp >= Character_Knight.nextlevelexp) {
           Character_Knight.level++;
-          Character_Knight.exp -= Character_Knight.nextlevelexp;
           Character_Knight.burnrange += 5;
           Character_Knight.burndamage += 0.5;
           Character_Knight.nextlevelexp += 150;
@@ -1034,11 +1070,75 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
         }
         checkKnightLevelUp();
       }, 500);
+
+      // Logic for killing enemy
       this.collidedEnemies.forEach(function (enemySprite) {
         Character_Knight.exp += enemySprite.exp;
         checkKnightLevelUp();
       });
       this.collidedEnemies = [];
+
+      // Check Knight HP
+      if (Character_Knight.hp <= 0) {
+        Character_Knight.body.setVelocity(0);
+        Character_Knight.anims.isPlaying = false;
+        this.enemies.getChildren().forEach(function (enemy) {
+          enemy.body.setVelocity(0);
+          enemy.anims.isPlaying = false;
+        });
+        this.stopwatchText.setText("You have been defeated!");
+        var playagainbutton = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "PlayAgain").setInteractive().setScale(2).setScrollFactor(0).setDepth(1000);
+        playagainbutton.on("pointerdown", function () {
+          window.location.reload();
+        });
+      }
+
+      // Cards
+      var cardgroup;
+      var leveluptimer = this.time.addEvent({
+        delay: 10000,
+        callback: function callback() {
+          if (Character_Knight.level % 3 === 0 && Character_Knight.exp - (Character_Knight.nextlevelexp + 100) < 0) {
+            var type = Phaser.Utils.Array.GetRandom(["damagecard", "healthcard", "abilitycard"]);
+            levelUpCardEffect.call(this, type);
+          }
+        },
+        callbackScope: this,
+        loop: true
+      });
+
+      // Card Effect
+      function levelUpCardEffect(type) {
+        var card = new _CardSprites.CardSprites(this, this.cameras.main.width - 85, 180, type);
+        if (!cardgroup) {
+          cardgroup = this.add.group();
+        }
+        cardgroup.add(card);
+        this.time.addEvent({
+          delay: 5000,
+          callback: function callback() {
+            card.destroy();
+            if (cardgroup.getLength() === 0) {
+              cardgroup = undefined;
+            }
+          },
+          callbackScope: this
+        });
+        switch (type) {
+          case "damagecard":
+            Character_Knight.attackdamage += 0.5;
+            console.log("attackdamage: " + Character_Knight.attackdamage);
+            break;
+          case "healthcard":
+            Character_Knight.hp += 5;
+            console.log("hp: " + Character_Knight.hp);
+            break;
+          case "abilitycard":
+            Character_Knight.burndamage += 0.5;
+            console.log("burndamage: " + Character_Knight.burndamage);
+            break;
+        }
+      }
     }
   }, {
     key: "update",
@@ -1103,21 +1203,6 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.hptext.setText("HP: " + Character_Knight.hp);
       this.leveltext.setText("Level: " + Character_Knight.level);
       this.exptext.setText("EXP: " + Character_Knight.exp);
-
-      // Check Knight HP
-      if (Character_Knight.hp <= 0) {
-        Character_Knight.body.setVelocity(0);
-        Character_Knight.anims.isPlaying = false;
-        this.enemies.getChildren().forEach(function (enemy) {
-          enemy.body.setVelocity(0);
-          enemy.anims.isPlaying = false;
-        });
-        this.stopwatchText.setText("You have been defeated!");
-        var playagainbutton = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "PlayAgain").setInteractive().setScale(2).setScrollFactor(0).setDepth(1000);
-        playagainbutton.on("pointerdown", function () {
-          window.location.reload();
-        });
-      }
     }
   }, {
     key: "startStopwatch",
@@ -1137,7 +1222,7 @@ var PlayScene = exports.PlayScene = /*#__PURE__*/function (_Phaser$Scene) {
   }]);
   return PlayScene;
 }(Phaser.Scene);
-},{"../CST.js":"src/CST.js","../KnightSprites.js":"src/KnightSprites.js","../EnemySprites.js":"src/EnemySprites.js"}],"src/main.js":[function(require,module,exports) {
+},{"../CST.js":"src/CST.js","../KnightSprites.js":"src/KnightSprites.js","../EnemySprites.js":"src/EnemySprites.js","../CardSprites.js":"src/CardSprites.js"}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
 var _LoadScene = require("./Scenes/LoadScene.js");
@@ -1156,7 +1241,7 @@ var game = new Phaser.Game({
   physics: {
     default: "arcade",
     arcade: {
-      debug: true
+      debug: false
     }
   },
   scale: {
@@ -1189,7 +1274,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53626" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "13024" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
